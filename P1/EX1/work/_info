@@ -1,0 +1,205 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/alumnos/e359697/arq0_p1
+Ealu
+Z1 w1567852656
+Z2 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z3 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z6 8/home/alumnos/e359697/arq0_p1/rtl/alu.vhd
+Z7 F/home/alumnos/e359697/arq0_p1/rtl/alu.vhd
+l0
+L15
+V6I;B3A?gV4Qc2ZzIO8<TD3
+!s100 PZenWJ@F@Xc]_f<F91A7N1
+Z8 OL;C;10.6c;65
+32
+Z9 !s110 1570105801
+!i10b 1
+Z10 !s108 1570105801.000000
+Z11 !s90 -reportprogress|300|-work|work|/home/alumnos/e359697/arq0_p1/rtl/alu.vhd|
+Z12 !s107 /home/alumnos/e359697/arq0_p1/rtl/alu.vhd|
+!i113 0
+Z13 o-work work
+Z14 tExplicit 1 CvgOpt 0
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 3 alu 0 22 6I;B3A?gV4Qc2ZzIO8<TD3
+l44
+L25
+V8LmUU53YckJQLO@;Rh<?V2
+!s100 PKQFSzcfC>Y<jTI_Ma2fe2
+R8
+32
+R9
+!i10b 1
+R10
+R11
+R12
+!i113 0
+R13
+R14
+Ealu_control
+Z15 w1570104590
+R2
+R3
+R4
+R5
+R0
+Z16 8/home/alumnos/e359697/arq0_p1/rtl/alu_control.vhd
+Z17 F/home/alumnos/e359697/arq0_p1/rtl/alu_control.vhd
+l0
+L12
+VkhcF;6b2gXKl7?]1WQWlI2
+!s100 R9Kf0QF=]j`[mbiT`SNBo0
+R8
+32
+R9
+!i10b 1
+R10
+Z18 !s90 -reportprogress|300|-work|work|/home/alumnos/e359697/arq0_p1/rtl/alu_control.vhd|
+Z19 !s107 /home/alumnos/e359697/arq0_p1/rtl/alu_control.vhd|
+!i113 0
+R13
+R14
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 11 alu_control 0 22 khcF;6b2gXKl7?]1WQWlI2
+l37
+L22
+V?VhVRm3>mWcRf^>nLGRNl3
+!s100 I[8l;H=10hUE5N7_58aVE2
+R8
+32
+R9
+!i10b 1
+R10
+R18
+R19
+!i113 0
+R13
+R14
+Econtrol_unit
+Z20 w1570105023
+R2
+R3
+R4
+R5
+R0
+Z21 8/home/alumnos/e359697/arq0_p1/rtl/control_unit.vhd
+Z22 F/home/alumnos/e359697/arq0_p1/rtl/control_unit.vhd
+l0
+L12
+Vo7aH49ok]J]hOZYJRQT5>2
+!s100 1bhdbMaiIzAGa5FG9@fOB3
+R8
+32
+R9
+!i10b 1
+R10
+Z23 !s90 -reportprogress|300|-work|work|/home/alumnos/e359697/arq0_p1/rtl/control_unit.vhd|
+Z24 !s107 /home/alumnos/e359697/arq0_p1/rtl/control_unit.vhd|
+!i113 0
+R13
+R14
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 12 control_unit 0 22 o7aH49ok]J]hOZYJRQT5>2
+l47
+L32
+Vcd`cKnlf9:=?D250]kKCi3
+!s100 H3<mZaPHikH7AA[kSiKzf2
+R8
+32
+R9
+!i10b 1
+R10
+R23
+R24
+!i113 0
+R13
+R14
+Eprocessor
+w1570105623
+R2
+R3
+R4
+R5
+R0
+8/home/alumnos/e359697/arq0_p1/rtl/processor.vhd
+F/home/alumnos/e359697/arq0_p1/rtl/processor.vhd
+l0
+L12
+VnRXzM=m?bzUKC=K9;4Aa82
+!s100 f?Ma6[LKJiIJanZXnJ7d[2
+R8
+32
+R9
+!i10b 1
+R10
+!s90 -reportprogress|300|-work|work|/home/alumnos/e359697/arq0_p1/rtl/processor.vhd|
+!s107 /home/alumnos/e359697/arq0_p1/rtl/processor.vhd|
+!i113 0
+R13
+R14
+Ereg_bank
+Z25 w1567853096
+R2
+R3
+R4
+R5
+R0
+Z26 8/home/alumnos/e359697/arq0_p1/rtl/reg_bank.vhd
+Z27 F/home/alumnos/e359697/arq0_p1/rtl/reg_bank.vhd
+l0
+L15
+VIJaKHkDVgObgG024HWSS13
+!s100 mcj_ZWF[]T]VE]XjFVS]T0
+R8
+32
+R9
+!i10b 1
+R10
+Z28 !s90 -reportprogress|300|-work|work|/home/alumnos/e359697/arq0_p1/rtl/reg_bank.vhd|
+!s107 /home/alumnos/e359697/arq0_p1/rtl/reg_bank.vhd|
+!i113 0
+R13
+R14
+Artl
+R2
+R3
+R4
+R5
+DEx4 work 8 reg_bank 0 22 IJaKHkDVgObgG024HWSS13
+l36
+L29
+VIo?Qe00Q`k5:8[jT`@6d20
+!s100 hL59Db>l7@i@OQz9B36=c2
+R8
+32
+R9
+!i10b 1
+R10
+R28
+Z29 !s107 /home/alumnos/e359697/arq0_p1/rtl/reg_bank.vhd|
+!i113 0
+R13
+R14
