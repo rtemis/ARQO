@@ -278,7 +278,19 @@ architecture rtl of processor is
 		end if;
 	end process;
 
+	-- EX/MEM
+	EX_MEM: process(clk, reset)
+	begin
+		if rising_edge(clk) then
+			branch_mem <= branch_ex;
+			memwrite_mem <= memwrite_ex;
+			memread_mem <= memread_ex;
+			memtoreg_mem <= memtoreg_ex;
+			reg_wrt_mem <= reg_wrt_ex;
+		end if;
+	end process;
 
+	-- MEM/WB
 
 	-- Aumento del PC
 	PC_mas4_if <= PC + 4;
