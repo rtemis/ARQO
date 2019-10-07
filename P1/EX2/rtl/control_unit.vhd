@@ -139,6 +139,19 @@ begin
           RegDst    <= '0';
           Jump      <= '1';
 
+       -- nop
+      else
+         Branch    <= '0';
+         MemToReg  <= '0';
+         MemWrite  <= '0';
+         MemRead   <= '0';
+         ALUSrc    <= '0';
+         ALUOp     <= "000";
+         RegWrite  <= '0';
+         RegDst    <= '0';
+         Jump      <= '0';
+
+
         end if;
 
 	end process;

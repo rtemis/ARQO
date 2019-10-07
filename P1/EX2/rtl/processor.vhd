@@ -102,7 +102,7 @@ architecture rtl of processor is
 	signal puerto_wt_ex: std_logic_vector(4 downto 0);
 	signal puerto_wt_mem: std_logic_vector(4 downto 0);
 	signal puerto_wt_wb: std_logic_vector(4 downto 0);
-	
+
 	--Anteriores
 
 	signal PC: std_logic_vector(31 downto 0);
@@ -122,7 +122,7 @@ architecture rtl of processor is
 	--ant
 
 	signal op2: std_logic_vector(31 downto 0);
-	
+
 
 
 	--alucontrol
@@ -173,10 +173,10 @@ architecture rtl of processor is
 	signal add_in: std_logic_vector(31 downto 0);
 	signal add_out_ex: std_logic_vector(31 downto 0);
 	signal add_out_mem: std_logic_vector(31 downto 0);
-	
+
 
 	--señal puerta and
-	signal and_out: std_logic;
+	signal and_out_mem: std_logic;
 
 	--señal jump
 	signal aux1: std_logic_vector(27 downto 0);
@@ -227,9 +227,9 @@ architecture rtl of processor is
 		Rd1 => rd1_id, -- Dato del puerto Rd1
 		A2    => instruccion_id(20 downto 16),  -- Direcci�n para el puerto Rd2
 		Rd2 => rd2_id  , -- Dato del puerto Rd2
-		A3    => puerto_wt,   -- Direcci�n para el puerto Wd3
+		A3    => puerto_wt_wb,   -- Direcci�n para el puerto Wd3
 		Wd3  => write_data ,  -- Dato de entrada Wd3
-		We3  => reg_wrt_id  -- Habilitaci�n de la escritura de Wd3
+		We3  => reg_wrt_wb  -- Habilitaci�n de la escritura de Wd3
 	);
 
 	--ALU
@@ -258,16 +258,36 @@ architecture rtl of processor is
 	-- IF/ID
 	IF_ID: process(clk, reset)
 	begin
-		if rising_edge(clk) then
+		if reset = '1' then
+			instruccion_id <= (others => '0');
+			PC_mas4_id <= (others => '0');
+
+		elsif rising_edge(clk) then
 			instruccion_id <= instruccion_if;
-			PC_mas4_id <= PC_mas4_if
+			PC_mas4_id <= PC_mas4_if;
 		end if;
 	end process;
 
 	-- ID/EX
 	ID_EX: process(clk, reset)
 	begin
-		if rising_edge(clk) then
+		if reset = '1' then
+			rd2_ex <= (others => '0');
+			rd1_ex <= (others => '0');
+			PC_mas4_ex <= (others => '0');
+			signo_ext_ex <= (others => '0');
+			puerto_wt_in0 <= (others => '0');
+			puerto_wt_in1 <= (others => '0');
+			reg_dest_ex <= '0';
+			alusrc_ex <= '0';
+			aluop_ex <= (others => '0');
+			branch_ex <= '0';
+			memwrite_ex <= '0';
+			memread_ex <= '0';
+			memtoreg_ex <= '0';
+			reg_wrt_ex <= '0';
+
+		elsif rising_edge(clk) then
 			rd2_ex <= rd2_id;
 			rd1_ex <= rd1_id;
 			PC_mas4_ex <= PC_mas4_id;
@@ -290,7 +310,19 @@ architecture rtl of processor is
 	-- EX/MEM
 	EX_MEM: process(clk, reset)
 	begin
-		if rising_edge(clk) then
+		if reset = '1' then
+			branch_mem <= '0';
+			memwrite_mem <= '0';
+			memread_mem <= '0';
+			memtoreg_mem <= '0';
+			reg_wrt_mem <= '0';
+			res_alu_mem <= (others => '0');
+			z_flag_mem <= '0';
+			rd2_mem <= (others => '0');
+			puerto_wt_mem <= (others => '0');
+			add_out_mem <= (others => '0');
+
+		elsif rising_edge(clk) then
 			branch_mem <= branch_ex;
 			memwrite_mem <= memwrite_ex;
 			memread_mem <= memread_ex;
@@ -301,22 +333,29 @@ architecture rtl of processor is
 			rd2_mem <= rd2_ex;
 			puerto_wt_mem <= puerto_wt_ex;
 			add_out_mem <= add_out_ex;
-			
-			
+
+
 		end if;
 	end process;
 
 	-- MEM/WB
 	MEM_WB: process(clk, reset)
 	begin
-		if rising_edge(clk) then
+		if reset = '1' then
+			reg_wrt_wb <= '0';
+			memtoreg_wb <= '0';
+			res_alu_wb <= (others => '0');
+			mem_out_wb <= (others => '0');
+			puerto_wt_wb <= (others => '0');
+
+		elsif rising_edge(clk) then
 			reg_wrt_wb <= reg_wrt_mem;
-			memtoreg_wb <= memtoreg_mem;	
+			memtoreg_wb <= memtoreg_mem;
 			res_alu_wb <= res_alu_mem;
 			mem_out_wb <= mem_out_mem;
-			puerto_wt_mem <= puerto_wt_wb;
-			
-			
+			puerto_wt_wb <= puerto_wt_mem;
+
+
 		end if;
 	end process;
 
@@ -342,10 +381,10 @@ architecture rtl of processor is
 	--Processor
 	IAddr <= PC;
 	DAddr    <=res_alu_mem;
-	DRdEn    <=memread_ex;
-	DWrEn    <= memwrite_ex;
-	DDataOut <= rd2_ex;
-	
+	DRdEn    <=memread_mem;
+	DWrEn    <= memwrite_mem;
+	DDataOut <= rd2_mem;
+
 	-- esto hay que revisar si da error o no, porque es un in
 	mem_out_mem <= DDataIn;
 
@@ -358,15 +397,15 @@ architecture rtl of processor is
 	add_out_ex <= PC_mas4_ex + add_in;
 
 	-- Puerta and
-	and_out_ex <= branch_mem and z_flag_mem;
+	and_out_mem <= branch_mem and z_flag_mem;
 
 	-- Jump
 	-- ESTO DEL JUMO FALTA POR HACER
-	aux1 <= instruccion (25 downto 0) & "00";
-	aux2 <= PC_mas4 (31 downto 28) & aux1;
+	aux1 <= instruccion_id (25 downto 0) & "00";
+	aux2 <= PC_mas4_id (31 downto 28) & aux1;
 	--
 
 	PC_sig <= aux2 WHEN jump = '1' ELSE
-				 add_out_mem WHEN and_out_ex ='1' ELSE PC_mas4_if;
+				 add_out_mem WHEN and_out_mem ='1' ELSE PC_mas4_if;
 
 end architecture;
