@@ -124,7 +124,7 @@ begin
           MemRead   <= '0';
           ALUSrc    <= '1';
           ALUOp     <= "100";
-          RegWrite  <= '0';
+          RegWrite  <= '1';
           RegDst    <= '0';
           Jump      <= '0';
 
