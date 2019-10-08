@@ -12,7 +12,9 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# Loading project p1
+# Loading project prueba
+# reading /opt/QuestaSim/questasim/linux_x86_64/../modelsim.ini
+# Loading project prueba
 # Compile of memory.vhd was successful.
 # Compile of processor_tb.vhd was successful.
 # Compile of alu.vhd was successful.
@@ -23,7 +25,7 @@
 # 7 compiles, 0 failed with no errors.
 do runsim.do
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/reg_bank.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -32,10 +34,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity reg_bank
 # -- Compiling architecture rtl of reg_bank
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -44,10 +46,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity alu
 # -- Compiling architecture rtl of alu
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/alu_control.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -56,10 +58,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity alu_control
 # -- Compiling architecture rtl of alu_control
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/control_unit.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -68,10 +70,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity control_unit
 # -- Compiling architecture rtl of control_unit
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/processor.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -80,10 +82,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity processor
 # -- Compiling architecture rtl of processor
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit memory.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -93,10 +95,10 @@ do runsim.do
 # -- Loading package std_logic_textio
 # -- Compiling entity memory
 # -- Compiling architecture Behavioral of memory
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # vcom -reportprogress 300 -work work -2002 -explicit processor_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -105,10 +107,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity processor_tb
 # -- Compiling architecture tb of processor_tb
-# End time: 12:45:28 on Oct 08,2019, Elapsed time: 0:00:00
+# End time: 20:45:53 on Oct 08,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -novopt processor_tb -gN_CYCLES=100 -gINIT_FILENAME_DATA="datos" -gINIT_FILENAME_INST="instrucciones" 
-# Start time: 12:45:28 on Oct 08,2019
+# Start time: 20:45:53 on Oct 08,2019
 # ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
 # Loading std.standard
 # Refreshing /home/alumnos/e359697/ARQO/P1/EX2/sim/work.processor_tb(tb)
@@ -232,7 +234,6 @@ run -all
 #    Time: 0 ns  Iteration: 2  Instance: /processor_tb/i_processor
 # ** Note: SIMULACION FINALIZADA. COMPROBAR ONDAS.
 #    Time: 1055 ns  Iteration: 1  Instance: /processor_tb
-# Causality operation skipped due to absence of debug database file
 quit -sim
-# End time: 12:59:39 on Oct 08,2019, Elapsed time: 0:14:11
-# Errors: 3, Warnings: 90
+# End time: 20:47:20 on Oct 08,2019, Elapsed time: 0:01:27
+# Errors: 3, Warnings: 89

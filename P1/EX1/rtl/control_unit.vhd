@@ -60,7 +60,7 @@ begin
 		  RegWrite  <= '1';
 		  RegDst    <= '1';
 		  Jump      <= '0';
-		  
+
 		-- BEQ
 		elsif OpCode = OP_BEQ then
 		  Branch    <= '1';
@@ -72,7 +72,7 @@ begin
 		  RegWrite  <= '0';
 		  RegDst    <= '0';
 		  Jump      <= '0';
-		  
+
 		-- SW
         elsif OpCode = OP_SW then
           Branch    <= '0';
@@ -84,7 +84,7 @@ begin
           RegWrite  <= '0';
           RegDst    <= '0';
           Jump      <= '0';
-		  
+
 		-- LW
         elsif OpCode = OP_LW then
           Branch    <= '0';
@@ -120,7 +120,7 @@ begin
           RegWrite  <= '1';
           RegDst    <= '0';
           Jump      <= '0';
-		  
+
 		--SLTI
         elsif OpCode = OP_SLTI then
           Branch    <= '0';
@@ -144,6 +144,18 @@ begin
           RegWrite  <= '0';
           RegDst    <= '0';
           Jump      <= '1';
+
+    -- NOP
+    else
+      Branch    <= '0';
+      MemToReg  <= '0';
+      MemWrite  <= '0';
+      MemRead   <= '0';
+      ALUSrc    <= '0';
+      ALUOp     <= "000";
+      RegWrite  <= '0';
+      RegDst    <= '0';
+      Jump      <= '0';
 
         end if;
 
