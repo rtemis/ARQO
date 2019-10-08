@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Bloque de control para la ALU. Arq0 2019-2020.
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES, Quitar este mensaje)
+-- Sara González Gómez y Leah Hadeed
 --
 --------------------------------------------------------------------------------
 

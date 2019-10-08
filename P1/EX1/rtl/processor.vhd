@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Procesador MIPS con pipeline curso Arquitectura 2019-2020
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES)
+-- Sara González Gómez y Leah Hadeed
 --
 --------------------------------------------------------------------------------
 
@@ -86,16 +86,16 @@ architecture rtl of processor is
 	end component;
 
 
---Señales
+	--Declaracion de señales 
 
 	signal PC: std_logic_vector(31 downto 0);
 	signal PC_sig: std_logic_vector(31 downto 0);
 	signal PC_mas4: std_logic_vector(31 downto 0);
 	signal instruccion: std_logic_vector(31 downto 0);
 	signal puerto_wt: std_logic_vector(4 downto 0);
-	signal rd2: std_logic_vector(31 downto 0);
 
-	-- cables alu
+	-- ALU
+	signal rd2: std_logic_vector(31 downto 0);
 	signal rd1: std_logic_vector(31 downto 0);
 	signal op2: std_logic_vector(31 downto 0);
 	signal res_alu: std_logic_vector(31 downto 0);
@@ -122,9 +122,6 @@ architecture rtl of processor is
 	signal reg_dest: std_logic;
 	signal reg_wrt: std_logic;
 	signal jump: std_logic;
-
-	--señal memory
-	-- signal mem_out: std_logic_vector(31 downto 0);
 
 	--señales add pc
 	signal add_in: std_logic_vector(31 downto 0);
@@ -247,7 +244,7 @@ architecture rtl of processor is
 	-- Puerta and
 	and_out <= branch and z_flag;
 
-	-- Jump
+	--mux para Jump, y mux para pc+4 o pc desplazado
 	aux1 <= instruccion (25 downto 0) & "00";
 	aux2 <= PC_mas4 (31 downto 28) & aux1;
 

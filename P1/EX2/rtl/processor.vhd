@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Procesador MIPS con pipeline curso Arquitectura 2019-2020
 --
--- (INCLUIR AQUI LA INFORMACION SOBRE LOS AUTORES)
+-- Sara González Gómez y Leah Hadeed
 --
 --------------------------------------------------------------------------------
 
@@ -29,23 +29,23 @@ architecture rtl of processor is
 -- Declaracion componente del banco de registros
 	component control_unit is
 	   port (
-		  -- Entrada = codigo de operacion en la instruccion:
-		  OpCode  : in  std_logic_vector (5 downto 0);
-		  -- Seniales para el PC
-		  Branch : out  std_logic; -- 1 = Ejecutandose instruccion branch
-		  -- Seniales relativas a la memoria
-		  MemToReg : out  std_logic; -- 1 = Escribir en registro la salida de la mem.
-		  MemWrite : out  std_logic; -- Escribir la memoria
-		  MemRead  : out  std_logic; -- Leer la memoria
-		  -- Seniales para la ALU
-		  ALUSrc : out  std_logic;                     -- 0 = oper.B es registro, 1 = es valor inm.
-		  ALUOp  : out  std_logic_vector (2 downto 0); -- Tipo operacion para control de la ALU
-		  -- Seniales para el GPR
-		  RegWrite : out  std_logic; -- 1=Escribir registro
-		  RegDst   : out  std_logic;  -- 0=Reg. destino es rt, 1=rd
-
-		  Jump : out std_logic -- 1 es jump
-	   );
+		-- Entrada = codigo de operacion en la instruccion:
+		OpCode  : in  std_logic_vector (5 downto 0);
+		-- Seniales para el PC
+		Branch : out  std_logic; -- 1 = Ejecutandose instruccion branch
+		-- Seniales relativas a la memoria
+		MemToReg : out  std_logic; -- 1 = Escribir en registro la salida de la mem.
+		MemWrite : out  std_logic; -- Escribir la memoria
+		MemRead  : out  std_logic; -- Leer la memoria
+		-- Seniales para la ALU
+		ALUSrc : out  std_logic;                     -- 0 = oper.B es registro, 1 = es valor inm.
+		ALUOp  : out  std_logic_vector (2 downto 0); -- Tipo operacion para control de la ALU
+		-- Seniales para el GPR
+		RegWrite : out  std_logic; -- 1=Escribir registro
+		RegDst   : out  std_logic;  -- 0=Reg. destino es rt, 1=rd
+		-- Senial para salto incondicional
+		Jump : out std_logic -- 1 es jump
+		);
 	end component;
 
 -- Declaracion componente del banco de registros
@@ -86,16 +86,13 @@ architecture rtl of processor is
 	end component;
 
 
---Señales
-	-- Nuevas
+	--Declaracion de señales 
+	
 	signal instruccion_if: std_logic_vector(31 downto 0);
 	signal instruccion_id: std_logic_vector(31 downto 0);
 	signal PC_mas4_if: std_logic_vector(31 downto 0);
 	signal PC_mas4_id: std_logic_vector(31 downto 0);
 	signal PC_mas4_ex: std_logic_vector(31 downto 0);
-	signal rd2_id: std_logic_vector(31 downto 0);
-	signal rd2_ex: std_logic_vector(31 downto 0);
-	signal rd2_mem: std_logic_vector(31 downto 0);
 
 	signal puerto_wt_in0: std_logic_vector(4 downto 0);
 	signal puerto_wt_in1: std_logic_vector(4 downto 0);
@@ -103,38 +100,32 @@ architecture rtl of processor is
 	signal puerto_wt_mem: std_logic_vector(4 downto 0);
 	signal puerto_wt_wb: std_logic_vector(4 downto 0);
 
-	--Anteriores
-
 	signal PC: std_logic_vector(31 downto 0);
 	signal PC_sig: std_logic_vector(31 downto 0);
 
-	-- cables alu
-	--nuevas
-	signal rd1_id: std_logic_vector(31 downto 0);
-	signal rd1_ex: std_logic_vector(31 downto 0);
 	signal signo_ext_id: std_logic_vector(31 downto 0);
 	signal signo_ext_ex: std_logic_vector(31 downto 0);
+	
+	-- ALU
+	signal rd2_id: std_logic_vector(31 downto 0);
+	signal rd2_ex: std_logic_vector(31 downto 0);
+	signal rd2_mem: std_logic_vector(31 downto 0);
+	signal rd1_id: std_logic_vector(31 downto 0);
+	signal rd1_ex: std_logic_vector(31 downto 0);
 	signal res_alu_ex: std_logic_vector(31 downto 0);
 	signal res_alu_mem: std_logic_vector(31 downto 0);
 	signal res_alu_wb: std_logic_vector(31 downto 0);
 	signal z_flag_ex: std_logic;
 	signal z_flag_mem: std_logic;
-	--ant
-
 	signal op2: std_logic_vector(31 downto 0);
-
-
 
 	--alucontrol
 	signal alu_ctrl: std_logic_vector(3 downto 0);
 
-
-
-	-- write data
+	--wirte data
 	signal write_data: std_logic_vector(31 downto 0);
 
-	--señales de control
-	--Nuevas
+	--señales contorl unit
 	signal reg_dest_id: std_logic;
 	signal reg_dest_ex: std_logic;
 	signal alusrc_id: std_logic;
@@ -142,6 +133,7 @@ architecture rtl of processor is
 	signal aluop_id:  std_logic_vector (2 downto 0);
 	signal aluop_ex:  std_logic_vector (2 downto 0);
 
+	--señales de control
 	signal branch_id: std_logic;
 	signal branch_ex: std_logic;
 	signal branch_mem: std_logic;
@@ -161,11 +153,9 @@ architecture rtl of processor is
 	signal reg_wrt_mem: std_logic;
 	signal reg_wrt_wb: std_logic;
 
-
-	--ant
 	signal jump: std_logic;
 
-	--señal memory
+	-- señales salida de la memoria
 	signal mem_out_mem: std_logic_vector(31 downto 0);
 	signal mem_out_wb: std_logic_vector(31 downto 0);
 
@@ -174,11 +164,10 @@ architecture rtl of processor is
 	signal add_out_ex: std_logic_vector(31 downto 0);
 	signal add_out_mem: std_logic_vector(31 downto 0);
 
-
 	--señal puerta and
 	signal and_out_mem: std_logic;
 
-	--señal jump
+	--señales jump
 	signal aux1: std_logic_vector(27 downto 0);
 	signal aux2: std_logic_vector(31 downto 0);
 
@@ -378,14 +367,12 @@ architecture rtl of processor is
 
 
 
-	--Processor
+	--Processor 
 	IAddr <= PC;
 	DAddr    <=res_alu_mem;
 	DRdEn    <=memread_mem;
 	DWrEn    <= memwrite_mem;
 	DDataOut <= rd2_mem;
-
-	-- esto hay que revisar si da error o no, porque es un in
 	mem_out_mem <= DDataIn;
 
 
@@ -399,12 +386,11 @@ architecture rtl of processor is
 	-- Puerta and
 	and_out_mem <= branch_mem and z_flag_mem;
 
-	-- Jump
-	-- ESTO DEL JUMO FALTA POR HACER
+	-- Seniales para direccion del jump
 	aux1 <= instruccion_id (25 downto 0) & "00";
 	aux2 <= PC_mas4_id (31 downto 28) & aux1;
-	--
-
+	
+	--mux para Jump, y mux para pc+4 o pc desplazado
 	PC_sig <= aux2 WHEN jump = '1' ELSE
 				 add_out_mem WHEN and_out_mem ='1' ELSE PC_mas4_if;
 
