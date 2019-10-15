@@ -29,7 +29,7 @@ architecture rtl of processor is
 	----------------------------------------------------
 	--           DECLARACION DE COMPONENTES           --
 	----------------------------------------------------
-	
+
 -- Declaracion componente del banco de registros
 	component control_unit is
 	   port (
@@ -93,10 +93,10 @@ architecture rtl of processor is
 	----------------------------------------------------
 	--           DECLARACION DE SENALES               --
 	----------------------------------------------------
-	
-	--Declaracion de señales 
-	-- Senales para fase ID 
-	
+
+	--Declaracion de señales
+	-- Senales para fase ID
+
 	signal instruccion_if: std_logic_vector(31 downto 0);
 	signal instruccion_id: std_logic_vector(31 downto 0);
 	signal PC_mas4_if: std_logic_vector(31 downto 0);
@@ -114,7 +114,7 @@ architecture rtl of processor is
 
 	signal signo_ext_id: std_logic_vector(31 downto 0);
 	signal signo_ext_ex: std_logic_vector(31 downto 0);
-	
+
 	-- ALU
 	signal rd2_id: std_logic_vector(31 downto 0);
 	signal rd2_ex: std_logic_vector(31 downto 0);
@@ -180,6 +180,12 @@ architecture rtl of processor is
 	signal aux1: std_logic_vector(27 downto 0);
 	signal aux2: std_logic_vector(31 downto 0);
 
+	-- señales forwardin unit
+	signal enable_1: std_logic_vector(1 downto 0);
+	signal enable_2: std_logic_vector(1 downto 0);
+	signal mux_rd1: std_logic_vector(31 downto 0);
+	signal mux_rd2: std_logic_vector(31 downto 0);
+
 
 
 
@@ -188,7 +194,7 @@ architecture rtl of processor is
 	----------------------------------------------------
 	--           INSTANCIAS DE COMPONENTES            --
 	----------------------------------------------------
-	
+
 	--Unidad de Control
 	inst_control: control_unit
 	port map(
@@ -248,7 +254,7 @@ architecture rtl of processor is
 	----------------------------------------------------
 	--    DECLARACION DE PROCESOS PARA SEGMENTADO     --
 	----------------------------------------------------
-	
+
 	-- PC
 	PC_reg: process (clk, reset)
 	begin
@@ -293,8 +299,8 @@ architecture rtl of processor is
 			reg_wrt_ex <= '0';
 
 		elsif rising_edge(clk) then
-			rd2_ex <= rd2_id;
-			rd1_ex <= rd1_id;
+			rd2_ex <= mux_rd2;
+			rd1_ex <= mux_rd1;
 			PC_mas4_ex <= PC_mas4_id;
 			signo_ext_ex <= signo_ext_id;
 			puerto_wt_in0 <= instruccion_id(20 downto 16);
@@ -378,7 +384,7 @@ architecture rtl of processor is
 
 
 
-	--Processor 
+	--Processor
 	IAddr 		<= PC;
 	DAddr    	<= res_alu_mem;
 	DRdEn    	<= memread_mem;
@@ -400,11 +406,28 @@ architecture rtl of processor is
 	-- Seniales para direccion del jump
 	aux1 <= instruccion_id (25 downto 0) & "00";
 	aux2 <= PC_mas4_id (31 downto 28) & aux1;
-	
+
 	--mux para Jump, y mux para pc+4 o pc desplazado
 	PC_sig <= aux2 WHEN jump = '1' ELSE
 		add_out_mem WHEN and_out_mem ='1' ELSE PC_mas4_if;
-		
-	
+
+	--FORWARDING UNIT
+	-- enable mux rd_1
+	enable_1 <= "01" when puerto_wt_mem = instruccion_id(25 downto 21) else
+	 	"10" when puerto_wt_wb = instruccion_id(25 downto 21) ELSE
+		"00";
+	-- mux_rd1
+	mux_rd1 <= write_data when enable_1 ="10" ELSE
+		res_alu_mem when enable_1 = "01" else
+		rd1_id;
+
+	-- enable mux_rd2
+	enable_2 <= "01" when puerto_wt_mem = instruccion_id(20 downto 16) else
+	 	"10" when puerto_wt_wb = instruccion_id(20 downto 16) ELSE
+		"00";
+	--mux rd2
+	mux_rd2 <= write_data when enable_2 ="10" ELSE
+		res_alu_mem when enable_2 = "01" else
+		rd2_id;
 
 end architecture;
