@@ -24,11 +24,11 @@ entity processor is
 		DDataIn    : in  std_logic_vector(31 downto 0)  -- Dato leido
 	);
 end processor;
-
+--------------------------------------------------------------------------------
 architecture rtl of processor is
-	----------------------------------------------------
-	--           DECLARACION DE COMPONENTES           --
-	----------------------------------------------------
+					----------------------------------------------------
+					--           DECLARACION DE COMPONENTES           --
+					----------------------------------------------------
 
 -- Declaracion componente del banco de registros
 	component control_unit is
@@ -36,7 +36,7 @@ architecture rtl of processor is
 		-- Entrada = codigo de operacion en la instruccion:
 		OpCode  : in  std_logic_vector (5 downto 0);
 		-- Seniales para el PC
-		Branch : out  std_logic; -- 1 = Ejecutandose instruccion branch
+		Branch : out  std_logic; 	 -- 1 = Ejecutandose instruccion branch
 		-- Seniales relativas a la memoria
 		MemToReg : out  std_logic; -- 1 = Escribir en registro la salida de la mem.
 		MemWrite : out  std_logic; -- Escribir la memoria
@@ -46,7 +46,7 @@ architecture rtl of processor is
 		ALUOp  : out  std_logic_vector (2 downto 0); -- Tipo operacion para control de la ALU
 		-- Seniales para el GPR
 		RegWrite : out  std_logic; -- 1=Escribir registro
-		RegDst   : out  std_logic;  -- 0=Reg. destino es rt, 1=rd
+		RegDst   : out  std_logic; -- 0=Reg. destino es rt, 1=rd
 		-- Senial para salto incondicional
 		Jump : out std_logic -- 1 es jump
 		);
@@ -82,21 +82,18 @@ architecture rtl of processor is
 	component alu_control is
 	port (
 		-- Entradas:
-		ALUOp  : in std_logic_vector (2 downto 0); -- Codigo de control desde la unidad de control
-		Funct  : in std_logic_vector (5 downto 0); -- Campo "funct" de la instruccion
+		ALUOp  : in std_logic_vector (2 downto 0); 			-- Codigo de control desde la unidad de control
+		Funct  : in std_logic_vector (5 downto 0); 			-- Campo "funct" de la instruccion
 		-- Salida de control para la ALU:
-		ALUControl : out std_logic_vector (3 downto 0) -- Define operacion a ejecutar por la ALU
+		ALUControl : out std_logic_vector (3 downto 0) 	-- Define operacion a ejecutar por la ALU
 	);
 	end component;
+--------------------------------------------------------------------------------
+					----------------------------------------------------
+					--        DECLARACION DE SEÑALES POR FASE         --
+					----------------------------------------------------
 
-
-	----------------------------------------------------
-	--           DECLARACION DE SENALES               --
-	----------------------------------------------------
-
-	--Declaracion de señales
 	-- Senales para fase ID
-
 	signal instruccion_if: std_logic_vector(31 downto 0);
 	signal instruccion_id: std_logic_vector(31 downto 0);
 	signal PC_mas4_if: std_logic_vector(31 downto 0);
@@ -186,74 +183,68 @@ architecture rtl of processor is
 	signal mux_rd1: std_logic_vector(31 downto 0);
 	signal mux_rd2: std_logic_vector(31 downto 0);
 
-
-
-
-	--Conexion cables-componentes
+--------------------------------------------------------------------------------
 	begin
-	----------------------------------------------------
-	--           INSTANCIAS DE COMPONENTES            --
-	----------------------------------------------------
-
+					----------------------------------------------------
+					--           INSTANCIAS DE COMPONENTES            --
+					----------------------------------------------------
 	--Unidad de Control
 	inst_control: control_unit
 	port map(
 		-- Entrada = codigo de operacion en la instruccion:
-		OpCode =>  instruccion_id(31 downto 26),
+		OpCode		=>  instruccion_id(31 downto 26),
 		-- Seniales para el PC
-		Branch => branch_id,
+		Branch 		=> branch_id,
 		-- Seniales relativas a la memoria
 		MemToReg  => memtoreg_id,
 		MemWrite  => memwrite_id,
-		MemRead  => memread_id,
+		MemRead  	=> memread_id,
 		-- Seniales para la ALU
-		ALUSrc  => alusrc_id,                   -- 0 = oper.B es registro, 1 = es valor inm.
-		ALUOp  => aluop_id,
+		ALUSrc  	=> alusrc_id, -- 0 = oper.B es registro, 1 = es valor inm.
+		ALUOp  		=> aluop_id,
 		-- Seniales para el GPR
-		RegWrite => reg_wrt_id,
-		RegDst  => reg_dest_id,
-		Jump => jump
+		RegWrite 	=> reg_wrt_id,
+		RegDst  	=> reg_dest_id,
+		Jump 			=> jump
 	);
 
 	-- Control ALU
 	inst_alucontrol: alu_control
 	port map(
 		-- Entradas:
-		ALUOp  =>aluop_ex,
-		Funct  => signo_ext_ex(5 downto 0),
+		ALUOp => aluop_ex,
+		Funct => signo_ext_ex(5 downto 0),
 		-- Salida de control para la ALU:
-		ALUControl => alu_ctrl
+		ALUControl 	=> alu_ctrl
 	);
 
 	-- Banco Registros
 	inst_regbank: reg_bank
 	port map(
-		Clk => clk, -- Reloj activo en flanco de subida
-		Reset  => reset, -- Reset as�ncrono a nivel alto
-		A1    => instruccion_id(25 downto 21),   -- Direcci�n para el puerto Rd1
-		Rd1 => rd1_id, -- Dato del puerto Rd1
+		Clk 	=> clk, 													-- Reloj activo en flanco de subida
+		Reset => reset, 												-- Reset as�ncrono a nivel alto
+		A1    => instruccion_id(25 downto 21),  -- Direcci�n para el puerto Rd1
+		Rd1 	=> rd1_id, 												-- Dato del puerto Rd1
 		A2    => instruccion_id(20 downto 16),  -- Direcci�n para el puerto Rd2
-		Rd2 => rd2_id  , -- Dato del puerto Rd2
-		A3    => puerto_wt_wb,   -- Direcci�n para el puerto Wd3
-		Wd3  => write_data ,  -- Dato de entrada Wd3
-		We3  => reg_wrt_wb  -- Habilitaci�n de la escritura de Wd3
+		Rd2 	=> rd2_id, 												-- Dato del puerto Rd2
+		A3    => puerto_wt_wb,   								-- Direcci�n para el puerto Wd3
+		Wd3  	=> write_data,  									-- Dato de entrada Wd3
+		We3  	=> reg_wrt_wb  										-- Habilitaci�n de la escritura de Wd3
 	);
 
 	--ALU
 	inst_alu: alu
 	port map(
-		OpA    => rd1_ex,
-		OpB     => op2,
-		Control => alu_ctrl,
-		Result => res_alu_ex,
-		ZFlag   =>  z_flag_ex
-
-
+		OpA    	=> rd1_ex,			--
+		OpB     => op2,					--
+		Control => alu_ctrl,		--
+		Result 	=> res_alu_ex,	--
+		ZFlag   => z_flag_ex		--
 	);
 
-	----------------------------------------------------
-	--    DECLARACION DE PROCESOS PARA SEGMENTADO     --
-	----------------------------------------------------
+					----------------------------------------------------
+					--    DECLARACION DE PROCESOS PARA SEGMENTADO     --
+					----------------------------------------------------
 
 	-- PC
 	PC_reg: process (clk, reset)
@@ -263,19 +254,21 @@ architecture rtl of processor is
 
 		elsif rising_edge(clk) then
 			PC <= PC_sig;
+
 		end if;
 	end process;
 
-	-- IF/ID
+	--  IF/ID  --
 	IF_ID: process(clk, reset)
 	begin
 		if reset = '1' then
 			instruccion_id <= (others => '0');
-			PC_mas4_id <= (others => '0');
+			PC_mas4_id 		 <= (others => '0');
 
 		elsif rising_edge(clk) then
 			instruccion_id <= instruccion_if;
-			PC_mas4_id <= PC_mas4_if;
+			PC_mas4_id 	 	 <= PC_mas4_if;
+
 		end if;
 	end process;
 
@@ -283,37 +276,38 @@ architecture rtl of processor is
 	ID_EX: process(clk, reset)
 	begin
 		if reset = '1' then
-			rd2_ex <= (others => '0');
-			rd1_ex <= (others => '0');
-			PC_mas4_ex <= (others => '0');
-			signo_ext_ex <= (others => '0');
+			rd1_ex 				<= (others => '0');
+			rd2_ex 				<= (others => '0');
+			PC_mas4_ex 		<= (others => '0');
+			signo_ext_ex 	<= (others => '0');
 			puerto_wt_in0 <= (others => '0');
 			puerto_wt_in1 <= (others => '0');
-			reg_dest_ex <= '0';
-			alusrc_ex <= '0';
-			aluop_ex <= (others => '0');
-			branch_ex <= '0';
-			memwrite_ex <= '0';
-			memread_ex <= '0';
-			memtoreg_ex <= '0';
-			reg_wrt_ex <= '0';
+
+			reg_dest_ex 	<= '0';
+			branch_ex 		<= '0';
+			memread_ex 		<= '0';
+			memtoreg_ex 	<= '0';
+			aluop_ex 			<= (others => '0');
+			memwrite_ex 	<= '0';
+			alusrc_ex 		<= '0';
+			reg_wrt_ex 		<= '0';
 
 		elsif rising_edge(clk) then
-			rd2_ex <= mux_rd2;
-			rd1_ex <= mux_rd1;
-			PC_mas4_ex <= PC_mas4_id;
-			signo_ext_ex <= signo_ext_id;
+			rd1_ex 				<= mux_rd1;
+			rd2_ex 				<= mux_rd2;
+			PC_mas4_ex 		<= PC_mas4_id;
+			signo_ext_ex 	<= signo_ext_id;
 			puerto_wt_in0 <= instruccion_id(20 downto 16);
 			puerto_wt_in1 <= instruccion_id(15 downto 11);
 
 			reg_dest_ex <= reg_dest_id;
-			alusrc_ex <= alusrc_id;
-			aluop_ex <= aluop_id;
-			branch_ex <= branch_id;
-			memwrite_ex <= memwrite_id;
-			memread_ex <= memread_id;
+			branch_ex 	<= branch_id;
+			memread_ex 	<= memread_id;
 			memtoreg_ex <= memtoreg_id;
-			reg_wrt_ex <= reg_wrt_id;
+			aluop_ex 		<= aluop_id;
+			memwrite_ex <= memwrite_id;
+			alusrc_ex 	<= alusrc_id;
+			reg_wrt_ex 	<= reg_wrt_id;
 		end if;
 	end process;
 
@@ -321,28 +315,29 @@ architecture rtl of processor is
 	EX_MEM: process(clk, reset)
 	begin
 		if reset = '1' then
-			branch_mem <= '0';
-			memwrite_mem <= '0';
-			memread_mem <= '0';
-			memtoreg_mem <= '0';
-			reg_wrt_mem <= '0';
-			res_alu_mem <= (others => '0');
-			z_flag_mem <= '0';
-			rd2_mem <= (others => '0');
+			branch_mem 		<= '0';
+			memwrite_mem 	<= '0';
+			memread_mem 	<= '0';
+			memtoreg_mem 	<= '0';
+			reg_wrt_mem 	<= '0';
+			res_alu_mem 	<= (others => '0');
+			z_flag_mem 		<= '0';
+			rd2_mem 			<= (others => '0');
 			puerto_wt_mem <= (others => '0');
-			add_out_mem <= (others => '0');
+			add_out_mem 	<= (others => '0');
 
 		elsif rising_edge(clk) then
-			branch_mem <= branch_ex;
-			memwrite_mem <= memwrite_ex;
-			memread_mem <= memread_ex;
-			memtoreg_mem <= memtoreg_ex;
-			reg_wrt_mem <= reg_wrt_ex;
-			res_alu_mem <= res_alu_ex;
-			z_flag_mem <= z_flag_ex;
-			rd2_mem <= rd2_ex;
+			branch_mem 		<= branch_ex;
+			memwrite_mem 	<= memwrite_ex;
+			memread_mem 	<= memread_ex;
+			memtoreg_mem 	<= memtoreg_ex;
+			reg_wrt_mem 	<= reg_wrt_ex;
+			res_alu_mem 	<= res_alu_ex;
+			z_flag_mem 		<= z_flag_ex;
+			rd2_mem 			<= rd2_ex;
 			puerto_wt_mem <= puerto_wt_ex;
-			add_out_mem <= add_out_ex;
+			add_out_mem 	<= add_out_ex;
+
 		end if;
 	end process;
 
@@ -350,58 +345,62 @@ architecture rtl of processor is
 	MEM_WB: process(clk, reset)
 	begin
 		if reset = '1' then
-			reg_wrt_wb <= '0';
-			memtoreg_wb <= '0';
-			res_alu_wb <= (others => '0');
-			mem_out_wb <= (others => '0');
+			reg_wrt_wb 	 <= '0';
+			memtoreg_wb  <= '0';
+			res_alu_wb 	 <= (others => '0');
+			mem_out_wb 	 <= (others => '0');
 			puerto_wt_wb <= (others => '0');
 
 		elsif rising_edge(clk) then
-			reg_wrt_wb <= reg_wrt_mem;
-			memtoreg_wb <= memtoreg_mem;
-			res_alu_wb <= res_alu_mem;
-			mem_out_wb <= mem_out_mem;
+			reg_wrt_wb 	 <= reg_wrt_mem;
+			memtoreg_wb  <= memtoreg_mem;
+			res_alu_wb   <= res_alu_mem;
+			mem_out_wb   <= mem_out_mem;
 			puerto_wt_wb <= puerto_wt_mem;
+
 		end if;
 	end process;
+
+--------------------------------------------------------------------------------
+-- EJECUCION CONCURRENTE
+--------------------------------------------------------------------------------
+
+	--Processor
+	IAddr 			<= PC;
+	DAddr    		<= res_alu_mem;
+	DRdEn    		<= memread_mem;
+	DWrEn    		<= memwrite_mem;
+	DDataOut 		<= rd2_mem;
+	mem_out_mem <= DDataIn;
 
 	-- Aumento del PC
 	PC_mas4_if <= PC + 4;
 
+	-- Instruction Fetch
 	instruccion_if <= IDataIn;
+
+	-- Extensión de signo
+	signo_ext_id <= X"0000" & instruccion_id (15 downto 0) WHEN instruccion_id (15) = '0' ELSE
+									X"FFFF" & instruccion_id (15 downto 0);
+
+	-- Desplazamiento a la izquierda y suma del pc
+	add_in 			<= signo_ext_ex (29 downto 0) & "00";
+	add_out_ex 	<= PC_mas4_ex + add_in;
 
 	--mux entrada puerto escritura
 	puerto_wt_ex <= puerto_wt_in0 WHEN reg_dest_ex ='0' ELSE
-					 puerto_wt_in1;
-
-
-	-- Extensión de signo
-	signo_ext_id <= X"0000" & instruccion_id (15 downto 0) when instruccion_id (15) = '0' else
-					 X"FFFF" & instruccion_id (15 downto 0);
+									puerto_wt_in1;
 
 	--mux entrada OP2 ALU
-	op2 <= rd2_ex WHEN alusrc_ex ='0' ELSE signo_ext_ex;
-
-
-
-	--Processor
-	IAddr 		<= PC;
-	DAddr    	<= res_alu_mem;
-	DRdEn    	<= memread_mem;
-	DWrEn    	<= memwrite_mem;
-	DDataOut 	<= rd2_mem;
-	mem_out_mem <= DDataIn;
-
+	op2 <= rd2_ex WHEN alusrc_ex ='0' ELSE
+				 signo_ext_ex;
 
 	--mux write_data banco registro
-	write_data 	<= mem_out_wb WHEN memtoreg_wb ='1' ELSE res_alu_wb;
-
-	-- Desplazamiento a la izquierda y suma del pc
-	add_in 		<= signo_ext_ex (29 downto 0) & "00";
-	add_out_ex 	<= PC_mas4_ex + add_in;
+	write_data <= mem_out_wb WHEN memtoreg_wb ='1' ELSE
+								res_alu_wb;
 
 	-- Puerta and
-	and_out_mem <= branch_mem and z_flag_mem;
+	and_out_mem <= branch_mem AND z_flag_mem;
 
 	-- Seniales para direccion del jump
 	aux1 <= instruccion_id (25 downto 0) & "00";
@@ -409,25 +408,29 @@ architecture rtl of processor is
 
 	--mux para Jump, y mux para pc+4 o pc desplazado
 	PC_sig <= aux2 WHEN jump = '1' ELSE
-		add_out_mem WHEN and_out_mem ='1' ELSE PC_mas4_if;
+						add_out_mem WHEN and_out_mem ='1' ELSE
+						PC_mas4_if;
 
 	--FORWARDING UNIT
+
 	-- enable mux rd_1
-	enable_1 <= "01" when puerto_wt_mem = instruccion_id(25 downto 21) else
-	 	"10" when puerto_wt_wb = instruccion_id(25 downto 21) ELSE
-		"00";
-	-- mux_rd1
-	mux_rd1 <= write_data when enable_1 ="10" ELSE
-		res_alu_mem when enable_1 = "01" else
-		rd1_id;
+	enable_1 <= "01" WHEN puerto_wt_mem = instruccion_id(25 downto 21) AND puerto_wt_mem /= "00000" ELSE
+	 						"10" WHEN puerto_wt_wb 	= instruccion_id(25 downto 21) AND puerto_wt_wb /= "00000" ELSE
+							"00";
 
 	-- enable mux_rd2
-	enable_2 <= "01" when puerto_wt_mem = instruccion_id(20 downto 16) else
-	 	"10" when puerto_wt_wb = instruccion_id(20 downto 16) ELSE
-		"00";
+	enable_2 <= "01" WHEN puerto_wt_mem = instruccion_id(20 downto 16) AND puerto_wt_mem /= "00000" ELSE
+	 						"10" WHEN puerto_wt_wb  = instruccion_id(20 downto 16) AND puerto_wt_wb /= "00000"ELSE
+							"00";
+
+	-- mux_rd1
+	mux_rd1 <= write_data  WHEN enable_1 = "10" ELSE
+						 res_alu_mem WHEN enable_1 = "01" ELSE
+						 rd1_id;
+
 	--mux rd2
-	mux_rd2 <= write_data when enable_2 ="10" ELSE
-		res_alu_mem when enable_2 = "01" else
-		rd2_id;
+	mux_rd2 <= write_data  WHEN enable_2 = "10" ELSE
+						 res_alu_mem WHEN enable_2 = "01" ELSE
+						 rd2_id;
 
 end architecture;

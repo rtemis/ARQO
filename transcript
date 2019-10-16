@@ -12,18 +12,79 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# Loading project prueba
-# Compile of memory.vhd was successful.
-# Compile of processor_tb.vhd was successful.
+# Loading project p2ex1
 # Compile of alu.vhd was successful.
 # Compile of alu_control.vhd was successful.
 # Compile of control_unit.vhd was successful.
 # Compile of processor.vhd was successful.
 # Compile of reg_bank.vhd was successful.
+# Compile of memory.vhd was successful.
+# Compile of processor_tb.vhd was successful.
 # 7 compiles, 0 failed with no errors.
+cd ..
+# reading /opt/QuestaSim/questasim/linux_x86_64/../modelsim.ini
+ls
+# administrador
+# e359367
+# gdm
+# temporal
+cd e359367
+ls
+# ARQO
+# p2ex1.cr.mti
+# p2ex1.mpf
+# public_html
+# UnidadH
+# work
+cd work
+ls
+# _info
+# _lib1_0.qdb
+# _lib1_0.qpg
+# _lib1_0.qtl
+# _lib.qdb
+# _vmake
+cd ..
+ls
+# ARQO
+# p2ex1.cr.mti
+# p2ex1.mpf
+# public_html
+# UnidadH
+# work
+cd ARQO
+ls
+# P1
+# P2
+# README.md
+# transcript
+cd P2
+cd EX1
+cd sim
+ls
+# datos
+# ejer2.cr.mti
+# ejer2.mpf
+# instrucciones
+# memory.vhd
+# p1.cr.mti
+# p1.mpf
+# p2_prueba.cr.mti
+# p2_prueba.mpf
+# processor_tb.vhd
+# programa_dga.asm
+# prueba.cr.mti
+# prueba.mpf
+# runsim.do
+# test.cr.mti
+# test.mpf
+# transcript
+# vsim.wlf
+# wave.do
+# work
 do runsim.do
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/reg_bank.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -32,10 +93,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity reg_bank
 # -- Compiling architecture rtl of reg_bank
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -44,10 +105,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity alu
 # -- Compiling architecture rtl of alu
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/alu_control.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -56,10 +117,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity alu_control
 # -- Compiling architecture rtl of alu_control
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/control_unit.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -68,10 +129,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity control_unit
 # -- Compiling architecture rtl of control_unit
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit -check_synthesis ../rtl/processor.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -80,10 +141,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity processor
 # -- Compiling architecture rtl of processor
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit memory.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -93,10 +154,10 @@ do runsim.do
 # -- Loading package std_logic_textio
 # -- Compiling entity memory
 # -- Compiling architecture Behavioral of memory
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # vcom -reportprogress 300 -work work -2002 -explicit processor_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -105,10 +166,10 @@ do runsim.do
 # -- Loading package STD_LOGIC_UNSIGNED
 # -- Compiling entity processor_tb
 # -- Compiling architecture tb of processor_tb
-# End time: 15:02:56 on Oct 16,2019, Elapsed time: 0:00:00
+# End time: 13:27:56 on Oct 16,2019, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -novopt processor_tb -gN_CYCLES=100 -gINIT_FILENAME_DATA="datos" -gINIT_FILENAME_INST="instrucciones" 
-# Start time: 15:02:56 on Oct 16,2019
+# Start time: 13:27:56 on Oct 16,2019
 # ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
 # Loading std.standard
 # Refreshing /home/alumnos/e359367/ARQO/P2/EX1/sim/work.processor_tb(tb)
@@ -135,6 +196,14 @@ do runsim.do
 # (vish-4014) No objects found matching '/processor_tb/i_processor/inst_control'.
 #     while executing
 # "add wave -noupdate /processor_tb/i_processor/inst_control"
+do wave.do
+# ** Error: (vish-4014) No objects found matching '/processor_tb/i_processor/inst_control'.
+# Error in macro ./wave.do line 11
+# (vish-4014) No objects found matching '/processor_tb/i_processor/inst_control'.
+#     while executing
+# "add wave -noupdate /processor_tb/i_processor/inst_control"
+restart
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
 run -all
 # ** Note: COMIENZA LA SIMULACION
 #    Time: 0 ns  Iteration: 0  Instance: /processor_tb
@@ -158,10 +227,6 @@ run -all
 #    Time: 0 ns  Iteration: 0  Instance: /processor_tb/i_inst_mem
 # ** Note: Se ha cargado la memoria 'instrucciones'
 #    Time: 0 ns  Iteration: 0  Instance: /processor_tb/i_inst_mem
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /processor_tb/i_processor
-# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-#    Time: 0 ns  Iteration: 0  Instance: /processor_tb/i_processor
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
 #    Time: 0 ns  Iteration: 0  Instance: /processor_tb/i_processor
 # ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
@@ -252,6 +317,47 @@ run -all
 #    Time: 0 ns  Iteration: 2  Instance: /processor_tb/i_processor
 # ** Note: SIMULACION FINALIZADA. COMPROBAR ONDAS.
 #    Time: 1055 ns  Iteration: 1  Instance: /processor_tb
+# Causality operation skipped due to absence of debug database file
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/res_alu_ex
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/res_alu_mem
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/res_alu_wb
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/rd1_ex
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/rd1_id
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/rd2_id
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/rd2_ex
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/rd2_mem
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/mux_rd1
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/mux_rd2
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/inst_alu/OpA \
+sim:/processor_tb/i_processor/inst_alu/OpB
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/mux_rd1 \
+sim:/processor_tb/i_processor/mux_rd2
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/instruccion_id
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/res_alu_mem \
+sim:/processor_tb/i_processor/res_alu_wb
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/enable_1 \
+sim:/processor_tb/i_processor/enable_2
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/puerto_wt_wb
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/puerto_wt_mem
+add wave -position insertpoint  \
+sim:/processor_tb/i_processor/write_data
 quit -sim
-# End time: 15:05:05 on Oct 16,2019, Elapsed time: 0:02:09
-# Errors: 3, Warnings: 109
+# End time: 15:01:53 on Oct 16,2019, Elapsed time: 1:33:57
+# Errors: 6, Warnings: 105
