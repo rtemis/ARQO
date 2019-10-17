@@ -183,6 +183,14 @@ architecture rtl of processor is
 	signal mux_rd1: std_logic_vector(31 downto 0);
 	signal mux_rd2: std_logic_vector(31 downto 0);
 
+	-- señales hazard control unit
+	signal enable_ctrl_unit: std_logic;
+	signal PC_write: std_logic;
+	signal IFID_write: std_logic;
+
+
+
+
 --------------------------------------------------------------------------------
 	begin
 					----------------------------------------------------
@@ -259,9 +267,9 @@ architecture rtl of processor is
 	end process;
 
 	--  IF/ID  --
-	IF_ID: process(clk, reset)
+	IF_ID: process(clk, reset, IFID_write)
 	begin
-		if reset = '1' then
+		if reset = '1' or IFID_write = '0' then
 			instruccion_id <= (others => '0');
 			PC_mas4_id 		 <= (others => '0');
 
@@ -273,7 +281,7 @@ architecture rtl of processor is
 	end process;
 
 	-- ID/EX
-	ID_EX: process(clk, reset)
+	ID_EX: process(clk, reset, enable_ctrl_unit)
 	begin
 		if reset = '1' then
 			rd1_ex 				<= (others => '0');
@@ -283,6 +291,16 @@ architecture rtl of processor is
 			puerto_wt_in0 <= (others => '0');
 			puerto_wt_in1 <= (others => '0');
 
+			reg_dest_ex 	<= '0';
+			branch_ex 		<= '0';
+			memread_ex 		<= '0';
+			memtoreg_ex 	<= '0';
+			aluop_ex 			<= (others => '0');
+			memwrite_ex 	<= '0';
+			alusrc_ex 		<= '0';
+			reg_wrt_ex 		<= '0';
+
+		elsif enable_ctrl_unit = '0' then
 			reg_dest_ex 	<= '0';
 			branch_ex 		<= '0';
 			memread_ex 		<= '0';
@@ -374,7 +392,8 @@ architecture rtl of processor is
 	mem_out_mem <= DDataIn;
 
 	-- Aumento del PC
-	PC_mas4_if <= PC + 4;
+	PC_mas4_if <= (PC + 4) when PC_write = '1' else
+		PC;
 
 	-- Instruction Fetch
 	instruccion_if <= IDataIn;
@@ -410,17 +429,17 @@ architecture rtl of processor is
 	PC_sig <= aux2 WHEN jump = '1' ELSE
 						add_out_mem WHEN and_out_mem ='1' ELSE
 						PC_mas4_if;
-
-	--FORWARDING UNIT
-
+---------------------------------------------------
+----FORWARDING UNIT
+---------------------------------------------------
 	-- enable mux rd_1
-	enable_1 <= "01" WHEN puerto_wt_mem = instruccion_id(25 downto 21) AND puerto_wt_mem /= "00000" ELSE
-	 						"10" WHEN puerto_wt_wb 	= instruccion_id(25 downto 21) AND puerto_wt_wb /= "00000" ELSE
+	enable_1 <= "01" WHEN puerto_wt_mem = instruccion_id(25 downto 21) AND instruccion_id(25 downto 21) /= "00000" ELSE
+	 						"10" WHEN puerto_wt_wb 	= instruccion_id(25 downto 21) AND instruccion_id(25 downto 21) /= "00000" ELSE
 							"00";
 
 	-- enable mux_rd2
-	enable_2 <= "01" WHEN puerto_wt_mem = instruccion_id(20 downto 16) AND puerto_wt_mem /= "00000" ELSE
-	 						"10" WHEN puerto_wt_wb  = instruccion_id(20 downto 16) AND puerto_wt_wb /= "00000"ELSE
+	enable_2 <= "01" WHEN puerto_wt_mem = instruccion_id(20 downto 16) AND instruccion_id(20 downto 16) /= "00000" ELSE
+	 						"10" WHEN puerto_wt_wb  = instruccion_id(20 downto 16) AND instruccion_id(20 downto 16) /= "00000"ELSE
 							"00";
 
 	-- mux_rd1
@@ -432,5 +451,19 @@ architecture rtl of processor is
 	mux_rd2 <= write_data  WHEN enable_2 = "10" ELSE
 						 res_alu_mem WHEN enable_2 = "01" ELSE
 						 rd2_id;
+
+---------------------------------------------------
+----HAZARD CONTROL UNIT
+---------------------------------------------------
+	enable_ctrl_unit <= '0' when memread_ex = '1' and ((puerto_wt_in0 = instruccion_id(20 downto 16) and instruccion_id(20 downto 16) /= "00000")
+	 																											or (puerto_wt_in0 = instruccion_id(25 downto 21) and instruccion_id(25 downto 21) /= "00000"))
+ 		else '1';
+
+	PC_write <= enable_ctrl_unit;
+	IFID_write <= enable_ctrl_unit;
+
+	-- muz control unit
+
+
 
 end architecture;

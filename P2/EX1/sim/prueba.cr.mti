@@ -60,16 +60,6 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Compiling entity reg_bank
 -- Compiling architecture rtl of reg_bank
 
-} {} {}} /home/alumnos/e359367/ARQO/P2/EX1/rtl/processor.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/rtl/processor.vhd
-QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity processor
--- Compiling architecture rtl of processor
-
 } {} {}} /home/alumnos/e359367/ARQO/P2/EX1/sim/memory.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/sim/memory.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STANDARD
@@ -111,15 +101,15 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Compiling entity reg_bank
 -- Compiling architecture rtl of reg_bank
 
-} {} {}} /home/alumnos/e359367/ARQO/P2/EX1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/rtl/alu_control.vhd
+} {} {}} /home/alumnos/e359697/ARQO/P2/EX1/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P2/EX1/sim/processor_tb.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity alu_control
--- Compiling architecture rtl of alu_control
+-- Compiling entity processor_tb
+-- Compiling architecture tb of processor_tb
 
 } {} {}} /home/alumnos/e359697/ARQO/P1/EX2/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P1/EX2/sim/processor_tb.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
@@ -131,15 +121,15 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Compiling entity processor_tb
 -- Compiling architecture tb of processor_tb
 
-} {} {}} /home/alumnos/e359697/ARQO/P2/EX1/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P2/EX1/sim/processor_tb.vhd
+} {} {}} /home/alumnos/e359367/ARQO/P2/EX1/rtl/alu_control.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/rtl/alu_control.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity processor_tb
--- Compiling architecture tb of processor_tb
+-- Compiling entity alu_control
+-- Compiling architecture rtl of alu_control
 
 } {} {}} /home/alumnos/e359367/ARQO/P2/EX1/sim/processor_tb.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/sim/processor_tb.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
@@ -151,16 +141,6 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Compiling entity processor_tb
 -- Compiling architecture tb of processor_tb
 
-} {} {}} /home/alumnos/e359697/ARQO/P1/EX2/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P1/EX2/rtl/control_unit.vhd
-QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity control_unit
--- Compiling architecture rtl of control_unit
-
 } {} {}} /home/alumnos/e359697/ARQO/P2/EX1/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P2/EX1/rtl/control_unit.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STANDARD
@@ -171,7 +151,7 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Compiling entity control_unit
 -- Compiling architecture rtl of control_unit
 
-} {} {}} /home/alumnos/e359367/ARQO/P2/EX1/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/rtl/control_unit.vhd
+} {} {}} /home/alumnos/e359697/ARQO/P1/EX2/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P1/EX2/rtl/control_unit.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -180,6 +160,16 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity control_unit
 -- Compiling architecture rtl of control_unit
+
+} {} {}} /home/alumnos/e359697/ARQO/P1/EX2/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P1/EX2/rtl/alu.vhd
+QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity alu
+-- Compiling architecture rtl of alu
 
 } {} {}} /home/alumnos/e359697/ARQO/P2/EX1/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P2/EX1/rtl/alu.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
@@ -191,15 +181,15 @@ QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Compiling entity alu
 -- Compiling architecture rtl of alu
 
-} {} {}} /home/alumnos/e359697/ARQO/P1/EX2/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359697/ARQO/P1/EX2/rtl/alu.vhd
+} {} {}} /home/alumnos/e359367/ARQO/P2/EX1/rtl/control_unit.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/rtl/control_unit.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity alu
--- Compiling architecture rtl of alu
+-- Compiling entity control_unit
+-- Compiling architecture rtl of control_unit
 
 } {} {}} /home/alumnos/e359367/ARQO/P2/EX1/rtl/alu.vhd {1 {vcom -work work -2002 -explicit -vopt -stats=none /home/alumnos/e359367/ARQO/P2/EX1/rtl/alu.vhd
 QuestaSim-64 vcom 10.6c Compiler 2017.07 Jul 25 2017
