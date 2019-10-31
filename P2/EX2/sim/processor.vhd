@@ -122,6 +122,7 @@ architecture rtl of processor is
 	signal res_alu_ex: std_logic_vector(31 downto 0);
 	signal res_alu_mem: std_logic_vector(31 downto 0);
 	signal res_alu_wb: std_logic_vector(31 downto 0);
+	signal z_flag_id: std_logic;
 	signal z_flag_ex: std_logic;
 	signal z_flag_mem: std_logic;
 	signal op2: std_logic_vector(31 downto 0);
@@ -172,15 +173,13 @@ architecture rtl of processor is
 	signal add_out_mem: std_logic_vector(31 downto 0);
 
 	--señal puerta and
-	signal and_out_mem: std_logic;
+	signal and_out_id: std_logic;
 
 	--señales jump
 	signal aux1: std_logic_vector(27 downto 0);
 	signal aux2: std_logic_vector(31 downto 0);
 
 	-- señales forwardin unit
-	signal enable_1: std_logic_vector(1 downto 0);
-	signal enable_2: std_logic_vector(1 downto 0);
 	signal mux_rd1: std_logic_vector(31 downto 0);
 	signal mux_rd2: std_logic_vector(31 downto 0);
 
@@ -189,6 +188,9 @@ architecture rtl of processor is
 	signal PC_write: std_logic;
 	signal IFID_write: std_logic;
 
+	-- señales comparador
+	signal aux3: std_logic_vector(31 downto 0);
+	signal aux4: std_logic_vector(31 downto 0);
 
 
 
@@ -347,7 +349,6 @@ architecture rtl of processor is
 			z_flag_mem 		<= '0';
 			rd2_mem 			<= (others => '0');
 			puerto_wt_mem <= (others => '0');
-			add_out_mem 	<= (others => '0');
 
 		elsif rising_edge(clk) then
 			branch_mem 		<= branch_ex;
@@ -359,7 +360,6 @@ architecture rtl of processor is
 			z_flag_mem 		<= z_flag_ex;
 			rd2_mem 			<= rd2_ex;
 			puerto_wt_mem <= puerto_wt_ex;
-			add_out_mem 	<= add_out_ex;
 
 		end if;
 	end process;
@@ -407,8 +407,8 @@ architecture rtl of processor is
 									X"FFFF" & instruccion_id (15 downto 0);
 
 	-- Desplazamiento mux_rd1a la izquierda y suma del pc
-	add_in 			<= signo_ext_ex (29 downto 0) & "00";
-	add_out_ex 	<= PC_mas4_ex + add_in;
+	add_in 			<= signo_ext_id (29 downto 0) & "00";
+	add_out_mem 	<= PC_mas4_id + add_in;
 
 	--mux entrada puerto escritura
 	puerto_wt_ex <= puerto_wt_in0 WHEN reg_dest_ex ='0' ELSE
@@ -423,7 +423,7 @@ architecture rtl of processor is
 								res_alu_wb;
 
 	-- Puerta and
-	and_out_mem <= branch_mem AND z_flag_mem;
+	and_out_id <= branch_id AND z_flag_id;
 
 	-- Seniales para direccion del jump
 	aux1 <= instruccion_id (25 downto 0) & "00";
@@ -431,30 +431,20 @@ architecture rtl of processor is
 
 	--mux para Jump, y mux para pc+4 o pc desplazado
 	PC_sig <= aux2 WHEN jump = '1' ELSE
-						add_out_mem WHEN and_out_mem ='1' ELSE
+						add_out_mem WHEN and_out_id ='1' ELSE
 						PC_mas4_if;
 ---------------------------------------------------
 ----FORWARDING UNIT
 ---------------------------------------------------
 	-- enable mux rd_1
-	enable_1 <= "01" WHEN puerto_wt_mem = instruccion_ex(25 downto 21) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
-	 						"10" WHEN puerto_wt_wb 	= instruccion_ex(25 downto 21) AND puerto_wt_wb /= "00000" AND reg_wrt_wb = '1' ELSE
-							"00";
+	mux_rd1 <= res_alu_mem WHEN puerto_wt_mem = instruccion_ex(25 downto 21) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
+	 						write_data WHEN puerto_wt_wb 	= instruccion_ex(25 downto 21) AND puerto_wt_wb /= "00000" AND reg_wrt_wb = '1' ELSE
+							rd1_ex;
 
 	-- enable mux_rd2
-	enable_2 <= "01" WHEN puerto_wt_mem = instruccion_ex(20 downto 16) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
-	 						"10" WHEN puerto_wt_wb  = instruccion_ex(20 downto 16) AND puerto_wt_wb /= "00000" AND reg_wrt_wb = '1'ELSE
-							"00";
-
-	-- mux_rd1
-	mux_rd1 <= write_data  WHEN enable_1 = "10" ELSE
-						 res_alu_mem WHEN enable_1 = "01" ELSE
-						 rd1_ex;
-
-	--mux rd2
-	mux_rd2 <= write_data  WHEN enable_2 = "10" ELSE
-						 res_alu_mem WHEN enable_2 = "01" ELSE
-						 rd2_ex;
+	mux_rd2 <= res_alu_mem WHEN puerto_wt_mem = instruccion_ex(20 downto 16) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
+	 						write_data WHEN puerto_wt_wb  = instruccion_ex(20 downto 16) AND puerto_wt_wb /= "00000" AND reg_wrt_wb = '1'ELSE
+							rd2_ex;
 
 ---------------------------------------------------
 ----HAZARD CONTROL UNIT
@@ -466,7 +456,19 @@ architecture rtl of processor is
 	PC_write <= enable_ctrl_unit;
 	IFID_write <= enable_ctrl_unit;
 
+---------------------------------------------------
+---- COMPARADOR
+---------------------------------------------------
 
+aux3 <= res_alu_ex WHEN puerto_wt_ex = instruccion_id(25 downto 21) AND puerto_wt_ex /= "00000" AND reg_wrt_ex= '1' ELSE
+						res_alu_mem WHEN puerto_wt_mem = instruccion_id(25 downto 21) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
+						rd1_id;
+
+aux4 <= res_alu_ex WHEN puerto_wt_ex = instruccion_id(25 downto 21) AND puerto_wt_ex /= "00000" AND reg_wrt_ex= '1' ELSE
+						res_alu_mem WHEN puerto_wt_mem = instruccion_id(25 downto 21) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
+						rd2_id;
+
+z_flag_id <= '1' when aux3 = aux4 else '0';
 
 
 end architecture;
