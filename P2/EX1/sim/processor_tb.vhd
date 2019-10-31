@@ -7,14 +7,14 @@
 ---------------------------------------------------------------------------------------------------
 
 library ieee;
-use ieee.std_logic_1164.all; 
+use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
 entity processor_tb is
    generic (
-      INIT_FILENAME_INST : string   := "instrucciones"; -- Fichero con las instrucciones
-      INIT_FILENAME_DATA : string   := "datos";         -- Fichero con los datos
+      INIT_FILENAME_INST : string   := "instrucciones_riesgos"; -- Fichero con las instrucciones
+      INIT_FILENAME_DATA : string   := "datos_riesgos";         -- Fichero con los datos
       N_CYCLES           : positive := 100              -- Numero de ciclos a ejecutar
    );
 end processor_tb;
@@ -39,7 +39,7 @@ architecture tb of processor_tb is
 
    component memory
       generic(
-         INIT_FILENAME   : string := "instrucciones"; -- nombre fichero con datos iniciales
+         INIT_FILENAME   : string := "instrucciones_riesgos"; -- nombre fichero con datos iniciales
          MEM_SIZE        : integer := 1024            -- tamanio, en bytes
       );
       Port (
@@ -51,14 +51,14 @@ architecture tb of processor_tb is
          DataOut : out std_logic_vector(31 downto 0)  -- Dato leido
       );
    end component;
-    
+
    -- Constantes:
 
    constant CLK_PERIOD  : time := 10 ns;   -- Periodo de reloj
    constant RESET_TIME  : time := 50 ns;   -- Tiempo inicial de reset
-   
+
    --  Seniales de interconexion entre bloques:
-   
+
    signal clk         : std_logic;
    signal reset       : std_logic;
    -- Instruction memory
@@ -69,16 +69,16 @@ architecture tb of processor_tb is
    signal dRdEn      : std_logic;
    signal dWrEn      : std_logic;
    signal dDataOut   : std_logic_vector(31 downto 0);
-   signal dDataIn    : std_logic_vector(31 downto 0);               
+   signal dDataIn    : std_logic_vector(31 downto 0);
 
    -- Seniales de control del testbench:
-   
+
    signal endSimulation : boolean := false;
 
 begin
 
    -- Instanciaciones del procesador y las memorias:
-   
+
    i_processor : processor
       port map (
          Clk       => clk,
@@ -100,7 +100,7 @@ begin
          MEM_SIZE    => 1024
       )
       port map (
-         Clk     => clk,                       
+         Clk     => clk,
          Addr    => iAddr (31 downto 0),
          RdEn    => '1',
          WrEn    => '0',
@@ -112,9 +112,9 @@ begin
       generic map (
          INIT_FILENAME => INIT_FILENAME_DATA,
          MEM_SIZE    => 1024
-      )    
+      )
       port map(
-         Clk     => clk,                       
+         Clk     => clk,
          Addr    => dAddr (31 downto 0),
          RdEn    => dRdEn,
          WrEn    => dWrEn,
@@ -123,14 +123,14 @@ begin
       );
 
    -- Generacion del reloj:
-   
-   process 
-   begin           
+
+   process
+   begin
       while not endSimulation loop
          clk <= '0';
          wait for CLK_PERIOD/2;
          clk <= '1';
-         wait for CLK_PERIOD/2;    
+         wait for CLK_PERIOD/2;
       end loop;
       wait;
    end process;
@@ -141,7 +141,7 @@ begin
       report "COMIENZA LA SIMULACION";
       reset <= '1';
       wait for RESET_TIME;
-      reset <= '0';      
+      reset <= '0';
       for i in 1 to N_CYCLES loop
          wait until rising_edge (clk);
       end loop;
@@ -149,6 +149,6 @@ begin
       endSimulation <= true;
       report "SIMULACION FINALIZADA. COMPROBAR ONDAS.";
       wait;
-   end process;     
+   end process;
 
 end architecture;

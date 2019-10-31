@@ -20,7 +20,7 @@ vcom -work work -2002 -explicit memory.vhd
 vcom -work work -2002 -explicit processor_tb.vhd
 
 # Elaboracion:
-vsim -novopt -gINIT_FILENAME_INST="instrucciones" -gINIT_FILENAME_DATA="datos" -gN_CYCLES=100 processor_tb
+vsim -novopt -gINIT_FILENAME_INST="instrucciones_riesgos" -gINIT_FILENAME_DATA="datos_riesgos" -gN_CYCLES=100 processor_tb
 
 # Opcion para guardar todas las ondas:
 log -r /*
@@ -37,4 +37,3 @@ set StdArithNoWarnings 0
 run -all
 
 --------------------------------------------------------------------------------
-
