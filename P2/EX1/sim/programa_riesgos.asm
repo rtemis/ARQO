@@ -45,8 +45,8 @@ main:
 00000068  nop
 0000006c  nop
 00000070  nop
-00000074  add $s0, $t1, $t2  # en r16 un 41 = 5 + 36
-00000078  add $s0, $s0, $s0  # Dependencia con la anterior  # en r16 un 82 = 41 + 41.
+00000074  add $s0, $t1, $t2  # en r15 un 41 = 5 + 36
+00000078  add $s0, $s0, $s0  # Dependencia con la anterior  # en r15 un 82 = 41 + 41.
 0000007c  add $s1, $s0, $s0  # dependencia con la anterior  # en r16 un 164 = 82 + 82
 00000080  nop
 00000084  nop

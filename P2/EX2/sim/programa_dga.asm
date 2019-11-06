@@ -77,7 +77,7 @@ main:
  nop
  nop
  nop
- check_ok1: beq $15, $21, check_ok2 # No salta
+ check_ok1: beq $15, $21, check_ok2 # Si salta
  # ----------------------------------
  nop
  nop

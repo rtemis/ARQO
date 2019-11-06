@@ -169,7 +169,6 @@ architecture rtl of processor is
 
 	--señales add pc
 	signal add_in: std_logic_vector(31 downto 0);
-	signal add_out_ex: std_logic_vector(31 downto 0);
 	signal add_out_mem: std_logic_vector(31 downto 0);
 
 	--señal puerta and
