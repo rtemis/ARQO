@@ -13,8 +13,8 @@ use ieee.std_logic_unsigned.all;
 
 entity processor_tb is
    generic (
-      INIT_FILENAME_INST : string   := "instrucciones"; -- Fichero con las instrucciones
-      INIT_FILENAME_DATA : string   := "datos";         -- Fichero con los datos
+      INIT_FILENAME_INST : string   := "instrucciones_entrega"; -- Fichero con las instrucciones
+      INIT_FILENAME_DATA : string   := "data_entrega";         -- Fichero con los datos
       N_CYCLES           : positive := 100              -- Numero de ciclos a ejecutar
    );
 end processor_tb;
@@ -39,7 +39,7 @@ architecture tb of processor_tb is
 
    component memory
       generic(
-         INIT_FILENAME   : string := "instrucciones"; -- nombre fichero con datos iniciales
+         INIT_FILENAME   : string := "instrucciones_entrega"; -- nombre fichero con datos iniciales
          MEM_SIZE        : integer := 1024            -- tamanio, en bytes
       );
       Port (
