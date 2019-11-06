@@ -130,7 +130,7 @@ architecture rtl of processor is
 	--alucontrol
 	signal alu_ctrl: std_logic_vector(3 downto 0);
 
-	--wirte data
+	--write data
 	signal write_data: std_logic_vector(31 downto 0);
 
 	--señales contorl unit
@@ -257,7 +257,7 @@ architecture rtl of processor is
 					----------------------------------------------------
 
 	-- PC
-	PC_reg: process (clk, reset, PC_write)
+	PC_reg: process (clk, reset)
 	begin
 		if reset = '1' then
 			PC <= (others => '0');
@@ -269,16 +269,20 @@ architecture rtl of processor is
 	end process;
 
 	--  IF/ID  --
-	IF_ID: process(clk, reset, IFID_write)
+	IF_ID: process(clk, reset)
 	begin
 		if reset = '1' then
 			instruccion_id <= (others => '0');
 			PC_mas4_id 		 <= (others => '0');
 
 		elsif rising_edge(clk) and IFID_write = '1' then
-			instruccion_id <= instruccion_if;
-			PC_mas4_id 	 	 <= PC_mas4_if;
-
+			if and_out_id = '1' then
+				instruccion_id <= (others => '0');
+				PC_mas4_id 		 <= (others => '0');
+			else
+				instruccion_id <= instruccion_if;
+				PC_mas4_id 	 	 <= PC_mas4_if;
+			end if;
 		end if;
 	end process;
 
@@ -407,7 +411,7 @@ architecture rtl of processor is
 
 	-- Desplazamiento mux_rd1a la izquierda y suma del pc
 	add_in 			<= signo_ext_id (29 downto 0) & "00";
-	add_out_mem 	<= PC_mas4_id + add_in;
+	add_out_mem <= PC_mas4_id + add_in;
 
 	--mux entrada puerto escritura
 	puerto_wt_ex <= puerto_wt_in0 WHEN reg_dest_ex ='0' ELSE

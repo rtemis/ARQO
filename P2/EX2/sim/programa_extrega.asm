@@ -37,6 +37,7 @@ main:
  add $3, $1, $2 # en r3 un 4
  lw $4, 8($zero) # En r4 un 4
  nop
+ nop
  beq $3, $4, check_ok2 # salta
  lw $1, 16($zero) # En r1 un 16
 
