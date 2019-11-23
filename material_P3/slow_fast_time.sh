@@ -2,71 +2,58 @@
 
 #!/bin/bash
 
-# inicializar variables
-declare -A slowTime
-declare -A fastTime
-
-# Variables de bucle interno
+# Loop variables
 Ninicio=16144
 Npaso=64
-Nfinal=16208
-#Nfinal=17168
+Nfinal=17168
 
-# Variables de bucle externo
-reps=1
-nums=2
-#nums=$(((17168-16144)/Npaso))
+# Number of iterations
+reps=3
 
+# Files to be created
 fDAT=slow_fast_time.dat
 fPNG=slow_fast_time.png
 
-
-# borrar el fichero DAT y el fichero PNG
+# Erase the files if they already exist
 rm -f $fDAT fPNG
-rm -f $fMediaF fMediaS
 
-# generar el fichero DAT vacío
+# Create blank .dat file
 touch $fDAT
 
 echo "Running slow and fast..."
+# Set up arrays
+for ((N = Ninicio, j = 1 ; N <=Nfinal ; N += Npaso, j++)); do
+	oldF[$j]="0"
+	oldS[$j]="0"
+done
+
+# Iteration loop
 for ((i = 1 ; i <= reps ; i++)); do
-	# bucle para N desde P hasta Q
-	#for N in $(seq $Ninicio $Npaso $Nfinal);
-	#for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
-	#	echo "Slow N: $N / $Nfinal..."
-
-		# ejecutar los programas slow y fast consecutivamente con tamaño de matriz N
-		# para cada uno, filtrar la línea que contiene el tiempo y seleccionar la
-		# tercera columna (el valor del tiempo). Dejar los valores en variables
-		# para poder imprimirlos en la misma línea del fichero de datos
-	#	slowTime[$i,$j]=$(./slow $N | grep 'time' | awk '{print $3}')
-	#	echo ${slowTime[$i,$j]}
-	#done
-
-	for ((N = Ninicio, j = 1 ; N <=Nfinal ; N += Npaso, j++)); do
+	# Slow loop 
+	for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
+		echo "Slow N: $N / $Nfinal..."
+		# Calculate slow time
+		slowTime=$(./slow $N | grep 'time' | awk '{print $3}')
+		x=${oldS[$j]}
+		# Update slow value for average calculation
+		oldS[$j]=$(python -c "print( $slowTime + $x )")
+	done
+	# Fast loop
+	for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 		echo "Fast N: $N / $Nfinal..."
-		fastTime[$i,$j]=$(./fast $N | grep 'time' | awk '{print $3}')
-
+		# Calculate fast time
+		fastTime=$(./fast $N | grep 'time' | awk '{print $3}')
+		x=${oldF[$j]}
+		# Update fast value for average calculation
+		oldF[$j]=$(python -c "print( $fastTime + $x )")
 	done
 done
 
-for ((j = 1 ;  j <= nums; j++)); do
-	mediaF=0
-	aux=0
-#	mediaS="0"
-	for ((i = 1, N = Ninicio ; N <= Nfinal; i++, N += Npaso )); do
-		# mediaS=$(python media.py --add $mediaS {slowTime[$i,$j]})
-		echo "$aux"
-		prueba=${fastTime[$i,$j]}
-		echo "$prueba"
-		mediaF=$(python media.py --add $aux $prueba)
-		echo "$mediaF"
-		aux=$mediaF
-	done
-	# finalS=$(python media.py --avg mediaS nums)
-	#finalF=$(python media.py --avg $mediaF 1)
-
-	#echo "$N	$finalS	$finalF" >> $fDAT
+# Loop for writing to file
+for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
+	x=$(python -c "print(${oldF[$j]} / $reps)")
+	y=$(python -c "print(${oldS[$j]} / $reps)")
+	echo "$N $x $y" >> $fDAT
 done
 
 echo "Generating plot..."
@@ -85,4 +72,3 @@ plot "$fDAT" using 1:2 with lines lw 2 title "slow", \
 replot
 quit
 END_GNUPLOT
-
