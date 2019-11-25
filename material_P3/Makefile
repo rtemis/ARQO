@@ -16,4 +16,4 @@ multiplica_matriz: multiplica_matriz.c arqo3.c
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
 
 clean:
-	rm -f *.o *~ fast slow
+	rm -f *.o *~ fast slow multiplica_matriz
