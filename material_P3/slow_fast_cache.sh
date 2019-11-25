@@ -8,16 +8,20 @@ Npaso=64
 Nfinal=5584
 
 # Number of iterations
-reps=10
+reps=2
+
+fPNG1=cache_lectura.png
+fPNG2=cache_escritura.png
+
+rm -f $fPNG1 $fPNG2
 
 echo "Running slow and fast..."
 for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
 	# Files to be created
 	fDAT=cache_$cache.dat
-	fPNG=cache_$cache.png
 
 	# Erase the files if they already exist
-	rm -f $fDAT fPNG
+	rm -f $fDAT 
 
 	# Create blank .dat file
 	touch $fDAT
@@ -45,10 +49,10 @@ for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
 			D1mwS[$j]=$(python -c "print( $missesW + $y )")
 		done
 		# Fast loop
-		for ((N = Ninicio, j = 1, size = 1024 ; N <= Nfinal ; N += Npaso, j++, size *= 2)); do
+		for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate fast cache misses
-			echo "valgrind --tool=cachegrind --I1=$size,1,64 --cachegrind-out-file=temp.dat ./fast $N"
+			echo "valgrind --tool=cachegrind --I1=$cache,1,64 --cachegrind-out-file=temp.dat ./fast $N"
 			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
 			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
 			x=${D1mrF[$j]}
@@ -73,15 +77,29 @@ echo "Generating plot..."
 # llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
 # estándar el script que está entre "<< END_GNUPLOT" y "END_GNUPLOT"
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Execution Time"
-set ylabel "Execution time (s)"
+set title "Slow-Fast Cache Read Misses"
+set ylabel "Number of Misses"
 set xlabel "Matrix Size"
 set key right bottom
 set grid
 set term png
-set output "$fPNG"
+set output "$fPNG1"
 plot "$fDAT" using 1:2 with lines lw 2 title "slow", \
-     "$fDAT" using 1:3 with lines lw 2 title "fast"
+     "$fDAT" using 1:4 with lines lw 2 title "fast"
+replot
+quit
+END_GNUPLOT
+
+gnuplot << END_GNUPLOT
+set title "Slow-Fast Cache Write Misses"
+set ylabel "Number of Misses"
+set xlabel "Matrix Size"
+set key right bottom
+set grid
+set term png
+set output "$fPNG2"
+plot "$fDAT" using 1:3 with lines lw 2 title "slow", \
+     "$fDAT" using 1:5 with lines lw 2 title "fast"
 replot
 quit
 END_GNUPLOT
