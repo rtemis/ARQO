@@ -10,50 +10,63 @@ Nfinal=5584
 # Number of iterations
 reps=10
 
-# Files to be created
-fDAT=slow_fast_cache.dat
-fPNG=slow_fast_cache.png
-
-# Erase the files if they already exist
-rm -f $fDAT fPNG
-
-# Create blank .dat file
-touch $fDAT
-
 echo "Running slow and fast..."
-# Set up arrays
-for ((N = Ninicio, j = 1 ; N <=Nfinal ; N += Npaso, j++)); do
-	oldF[$j]="0"
-	oldS[$j]="0"
-done
+for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
+	# Files to be created
+	fDAT=cache_$cache.dat
+	fPNG=cache_$cache.png
 
-# Iteration loop
-for ((i = 1 ; i <= reps ; i++)); do
-	# Slow loop
-	for ((N = Ninicio, j = 1, size = 1024 ; N <= Nfinal ; N += Npaso, j++, size *= 2)); do
-		echo "Slow N: $N / $Nfinal..."
-		# Calculate slow time
-		slowTime=$(valgrind --tool=cachegrind --I1=$size,1,64 --cachegrind-out-file=slow-$j-$i.dat ./slow $N | grep 'I1 misses:' | awk 'print()')
-		x=${oldS[$j]}
-		# Update slow value for average calculation
-		oldS[$j]=$(python -c "print( $slowTime + $x )")
+	# Erase the files if they already exist
+	rm -f $fDAT fPNG
+
+	# Create blank .dat file
+	touch $fDAT
+
+	# Set up arrays
+	for ((N = Ninicio, j = 1 ; N <=Nfinal ; N += Npaso, j++)); do
+		D1mrF[$j]="0"
+		D1mwF[$j]="0"
+		D1mrS[$j]="0"
+		D1mwS[$j]="0"
 	done
-	# Fast loop
+	# Iteration loop
+	for ((i = 1 ; i <= reps ; i++)); do
+		# Slow loop
+		for ((N = Ninicio, j = 1; N <= Nfinal ; N += Npaso, j++)); do
+			echo "Slow N: $N / $Nfinal..."
+			# Calculate slow cache misses
+			echo "valgrind --tool=cachegrind --I1=$cache,1,64 --cachegrind-out-file=temp.dat ./slow $N"
+			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
+			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
+			x=${D1mrS[$j]}
+			y=${D1mwS[$j]}
+			# Update slow value for average calculation
+			D1mrS[$j]=$(python -c "print( $missesR + $x )")
+			D1mwS[$j]=$(python -c "print( $missesW + $y )")
+		done
+		# Fast loop
+		for ((N = Ninicio, j = 1, size = 1024 ; N <= Nfinal ; N += Npaso, j++, size *= 2)); do
+			echo "Slow N: $N / $Nfinal..."
+			# Calculate fast cache misses
+			echo "valgrind --tool=cachegrind --I1=$size,1,64 --cachegrind-out-file=temp.dat ./fast $N"
+			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
+			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
+			x=${D1mrF[$j]}
+			y=${D1mwF[$j]}
+			# Update fast value for average calculation
+			D1mrS[$j]=$(python -c "print( $missesR + $x )")
+			D1mwS[$j]=$(python -c "print( $missesW + $y )")
+		done
+	done
+
+	# Loop for writing to file
 	for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
-		echo "Fast N: $N / $Nfinal..."
-		# Calculate fast time
-		fastTime=$(./fast $N | grep 'time' | awk '{print $3}')
-		x=${oldF[$j]}
-		# Update fast value for average calculation
-		oldF[$j]=$(python -c "print( $fastTime + $x )")
+		slowR=$(python -c "print(${D1mrS[$j]} / $reps)")
+		slowW=$(python -c "print(${D1mwS[$j]} / $reps)")
+		fastR=$(python -c "print(${D1mrF[$j]} / $reps)")
+		fastW=$(python -c "print(${D1mwF[$j]} / $reps)")
+		echo "$N $slowR $slowW $fastR $fastW" >> $fDAT
 	done
-done
-
-# Loop for writing to file
-for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
-	x=$(python -c "print(${oldF[$j]} / $reps)")
-	y=$(python -c "print(${oldS[$j]} / $reps)")
-	echo "$N <D1mr“slow”> <D1mw“slow”> <D1mr “fast”> <D1mw “fast”>" >> $fDAT
 done
 
 echo "Generating plot..."
