@@ -8,7 +8,7 @@ Npaso=64
 Nfinal=17168
 
 # Number of iterations
-reps=3
+reps=20
 
 # Files to be created
 fDAT=slow_fast_time.dat
@@ -29,7 +29,7 @@ done
 
 # Iteration loop
 for ((i = 1 ; i <= reps ; i++)); do
-	# Slow loop 
+	# Slow loop
 	for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 		echo "Slow N: $N / $Nfinal..."
 		# Calculate slow time
@@ -53,7 +53,8 @@ done
 for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 	x=$(python -c "print(${oldF[$j]} / $reps)")
 	y=$(python -c "print(${oldS[$j]} / $reps)")
-	echo "$N $x $y" >> $fDAT
+	echo "$N     $y     $x"
+	echo "$N     $y     $x" >> $fDAT
 done
 
 echo "Generating plot..."

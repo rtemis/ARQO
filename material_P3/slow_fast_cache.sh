@@ -29,11 +29,11 @@ done
 
 # Iteration loop
 for ((i = 1 ; i <= reps ; i++)); do
-	# Slow loop 
+	# Slow loop
 	for ((N = Ninicio, j = 1, size = 1024 ; N <= Nfinal ; N += Npaso, j++, size *= 2)); do
 		echo "Slow N: $N / $Nfinal..."
 		# Calculate slow time
-		slowTime=$(valgrind --tool=cachegrind --I1=$size,1,64 --cachegrind-out-file=slow-$j-$i.dat ./slow $N)
+		slowTime=$(valgrind --tool=cachegrind --I1=$size,1,64 --cachegrind-out-file=slow-$j-$i.dat ./slow $N | grep 'I1 misses:' | awk 'print()')
 		x=${oldS[$j]}
 		# Update slow value for average calculation
 		oldS[$j]=$(python -c "print( $slowTime + $x )")
