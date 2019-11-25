@@ -16,15 +16,15 @@ fPNG2=cache_escritura.png
 rm -f $fPNG1 $fPNG2
 
 echo "Running slow and fast..."
-for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
+for ((k = 1, cache = 1024 ; cache <= 8192 ; k++, cache *= 2 )); do
 	# Files to be created
-	fDAT=cache_$cache.dat
+	fDAT[$k]=cache_$cache.dat
 
 	# Erase the files if they already exist
-	rm -f $fDAT 
+	rm -f ${fDAT[$k]} 
 
 	# Create blank .dat file
-	touch $fDAT
+	touch ${fDAT[$k]}
 
 	# Set up arrays
 	for ((N = Ninicio, j = 1 ; N <=Nfinal ; N += Npaso, j++)); do
@@ -39,7 +39,7 @@ for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
 		for ((N = Ninicio, j = 1; N <= Nfinal ; N += Npaso, j++)); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate slow cache misses
-			echo "valgrind --tool=cachegrind --I1=$cache,1,64 --cachegrind-out-file=temp.dat ./slow $N"
+			echo $(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --L1=8388608,1,64 --cachegrind-out-file=temp.dat ./slow $N)
 			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
 			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
 			x=${D1mrS[$j]}
@@ -52,7 +52,7 @@ for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
 		for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate fast cache misses
-			echo "valgrind --tool=cachegrind --I1=$cache,1,64 --cachegrind-out-file=temp.dat ./fast $N"
+			echo $(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --L1=8388608,1,64 --cachegrind-out-file=temp.dat ./fast $N)
 			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
 			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
 			x=${D1mrF[$j]}
@@ -69,7 +69,7 @@ for ((cache = 1024 ; cache <= 8192 ; cache *= 2 )); do
 		slowW=$(python -c "print(${D1mwS[$j]} / $reps)")
 		fastR=$(python -c "print(${D1mrF[$j]} / $reps)")
 		fastW=$(python -c "print(${D1mwF[$j]} / $reps)")
-		echo "$N $slowR $slowW $fastR $fastW" >> $fDAT
+		echo "$N $slowR $slowW $fastR $fastW" >> ${fDAT[$k]}
 	done
 done
 
@@ -84,8 +84,14 @@ set key right bottom
 set grid
 set term png
 set output "$fPNG1"
-plot "$fDAT" using 1:2 with lines lw 2 title "slow", \
-     "$fDAT" using 1:4 with lines lw 2 title "fast"
+plot "${fDAT[1]}" using 1:2 with lines lw 2 title "slow", \
+     "${fDAT[1]}" using 1:4 with lines lw 2 title "fast"  \
+	 "${fDAT[2]}" using 1:2 with lines lw 2 title "slow", \
+     "${fDAT[2]}" using 1:4 with lines lw 2 title "fast"  \
+	 "${fDAT[3]}" using 1:2 with lines lw 2 title "slow", \
+     "${fDAT[3]}" using 1:4 with lines lw 2 title "fast"  \
+	 "${fDAT[4]}" using 1:2 with lines lw 2 title "slow", \
+     "${fDAT[4]}" using 1:4 with lines lw 2 title "fast"  
 replot
 quit
 END_GNUPLOT
@@ -98,8 +104,14 @@ set key right bottom
 set grid
 set term png
 set output "$fPNG2"
-plot "$fDAT" using 1:3 with lines lw 2 title "slow", \
-     "$fDAT" using 1:5 with lines lw 2 title "fast"
+plot "${fDAT[1]}" using 1:3 with lines lw 2 title "slow", \
+     "${fDAT[1]}" using 1:5 with lines lw 2 title "fast"	\
+	 "${fDAT[2]}" using 1:3 with lines lw 2 title "slow", \
+     "${fDAT[2]}" using 1:5 with lines lw 2 title "fast"  \
+	 "${fDAT[3]}" using 1:3 with lines lw 2 title "slow", \
+     "${fDAT[3]}" using 1:5 with lines lw 2 title "fast"  \
+	 "${fDAT[4]}" using 1:3 with lines lw 2 title "slow", \
+     "${fDAT[4]}" using 1:5 with lines lw 2 title "fast"  
 replot
 quit
 END_GNUPLOT
