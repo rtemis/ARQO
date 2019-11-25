@@ -1,5 +1,5 @@
-LIBS = 
-LIB_DIR =  
+LIBS =
+LIB_DIR =
 FLAGS = -g -Wall -D_GNU_SOURCE
 
 .PHONY: clean all
@@ -10,6 +10,9 @@ fast: fast.c arqo3.c
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
 
 slow: slow.c arqo3.c
+	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
+
+multiplica_matriz: multiplica_matriz.c arqo3.c
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
 
 clean:
