@@ -48,7 +48,7 @@ void imprime_matrix(tipo **matriz, int n){
   }
 }
 
-void genera_traspuesta(tipo **matrix, tipo **traspuesta, int n){
+void genera_transpuesta(tipo **matrix, tipo **traspuesta, int n){
   int i, j;
 
   for(i = 0; i < n; i++){
@@ -86,11 +86,11 @@ int main(int argc, char** argv){
   gettimeofday(&fin, NULL);
 
   printf("Execution time: %f\n", ((fin.tv_sec*1000000+fin.tv_usec)-(ini.tv_sec*1000000+ini.tv_usec))*1.0/1000000.0);
-  printf("A:\n");
-  imprime_matrix(matrix_a, n);
-  printf("\nB:\n");
-  imprime_matrix(matrix_b, n);
-  printf("\nC:\n");
+  // printf("A:\n");
+  // imprime_matrix(matrix_a, n);
+  // printf("\nB:\n");
+  // imprime_matrix(matrix_b, n);
+  // printf("\nC:\n");
   imprime_matrix(matrix_c, n);
 
   //TRASPUESTA
@@ -103,21 +103,21 @@ int main(int argc, char** argv){
 
   gettimeofday(&ini, NULL);
 
-  genera_traspuesta(matrix_b, matrix_tras, n);
+  genera_transpuesta(matrix_b, matrix_tras, n);
 
-  multiplica_tras(matrix_a, matrix_b, matrix_c, n);
+  multiplica_tras(matrix_a, matrix_tras, matrix_c, n);
 
   gettimeofday(&fin, NULL);
 
   printf("Execution time: %f\n", ((fin.tv_sec*1000000+fin.tv_usec)-(ini.tv_sec*1000000+ini.tv_usec))*1.0/1000000.0);
 
-  printf("A:\n");
-  imprime_matrix(matrix_a, n);
-  printf("\nB:\n");
-  imprime_matrix(matrix_b, n);
-  printf("\nTras:\n");
-  imprime_matrix(matrix_tras, n);
-  printf("\nC:\n");
+  // printf("A:\n");
+  // imprime_matrix(matrix_a, n);
+  // printf("\nB:\n");
+  // imprime_matrix(matrix_b, n);
+  // printf("\nTras:\n");
+  // imprime_matrix(matrix_tras, n);
+  // printf("\nC:\n");
   imprime_matrix(matrix_c, n);
 
 
