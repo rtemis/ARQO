@@ -77,7 +77,7 @@ int main(int argc, char** argv){
   matrix_b = generateMatrix(n);
   matrix_c = generateEmptyMatrix(n);
 
-  printf("----------MULTIPLICACION NORMAL----------\n");
+  //printf("----------MULTIPLICACION NORMAL----------\n");
 
   gettimeofday(&ini, NULL);
 
@@ -85,13 +85,13 @@ int main(int argc, char** argv){
 
   gettimeofday(&fin, NULL);
 
-  printf("Execution time: %f\n", ((fin.tv_sec*1000000+fin.tv_usec)-(ini.tv_sec*1000000+ini.tv_usec))*1.0/1000000.0);
+  printf("Normal: : %f\n", ((fin.tv_sec*1000000+fin.tv_usec)-(ini.tv_sec*1000000+ini.tv_usec))*1.0/1000000.0);
   // printf("A:\n");
   // imprime_matrix(matrix_a, n);
   // printf("\nB:\n");
   // imprime_matrix(matrix_b, n);
   // printf("\nC:\n");
-  imprime_matrix(matrix_c, n);
+  //imprime_matrix(matrix_c, n);
 
   //TRASPUESTA
 
@@ -99,7 +99,7 @@ int main(int argc, char** argv){
 
   matrix_tras = generateEmptyMatrix(n);
 
-  printf("----------MULTIPLICACION TRAS----------\n");
+  //printf("----------MULTIPLICACION TRAS----------\n");
 
   gettimeofday(&ini, NULL);
 
@@ -109,7 +109,7 @@ int main(int argc, char** argv){
 
   gettimeofday(&fin, NULL);
 
-  printf("Execution time: %f\n", ((fin.tv_sec*1000000+fin.tv_usec)-(ini.tv_sec*1000000+ini.tv_usec))*1.0/1000000.0);
+  printf("Traspuesta: %f\n", ((fin.tv_sec*1000000+fin.tv_usec)-(ini.tv_sec*1000000+ini.tv_usec))*1.0/1000000.0);
 
   // printf("A:\n");
   // imprime_matrix(matrix_a, n);
@@ -118,7 +118,7 @@ int main(int argc, char** argv){
   // printf("\nTras:\n");
   // imprime_matrix(matrix_tras, n);
   // printf("\nC:\n");
-  imprime_matrix(matrix_c, n);
+  //imprime_matrix(matrix_c, n);
 
 
   freeMatrix(matrix_a);

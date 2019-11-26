@@ -5,8 +5,8 @@
 # Loop variables
 Ninicio=5072
 Npaso=64
-#Nfinal=5584
-Nfinal=5136
+Nfinal=5584
+
 # Number of iterations
 reps=2
 
@@ -16,12 +16,12 @@ fPNG2=cache_escritura.png
 rm -f $fPNG1 $fPNG2
 
 echo "Running slow and fast..."
-for ((k = 1, cache = 1024 ; cache <= 1024 ; k++, cache *= 2 )); do
+for ((k = 1, cache = 1024 ; cache <= 8192 ; k++, cache *= 2 )); do
 	# Files to be created
 	fDAT[$k]=cache_$cache.dat
 
 	# Erase the files if they already exist
-	rm -f ${fDAT[$k]} 
+	rm -f ${fDAT[$k]}
 
 	# Create blank .dat file
 	touch ${fDAT[$k]}
@@ -40,8 +40,8 @@ for ((k = 1, cache = 1024 ; cache <= 1024 ; k++, cache *= 2 )); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate slow cache misses
 			d=$(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --LL=8388608,1,64 --cachegrind-out-file=temp.dat ./slow $N)
-			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}') 
-			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}') 
+			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
+			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
 			x=${D1mrS[$j]}
 			y=${D1mwS[$j]}
 			# Update slow value for average calculation
@@ -53,13 +53,13 @@ for ((k = 1, cache = 1024 ; cache <= 1024 ; k++, cache *= 2 )); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate fast cache misses
 			d=$(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --LL=8388608,1,64 --cachegrind-out-file=temp.dat ./fast $N)
-			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}') 
+			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
 			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
 			x=${D1mrF[$j]}
 			y=${D1mwF[$j]}
 			# Update fast value for average calculation
-			D1mrS[$j]=$(python -c "print( int('$missesR'.replace(',', '')) + $x )")
-			D1mwS[$j]=$(python -c "print( int('$missesW'.replace(',', '')) + $y )")
+			D1mrF[$j]=$(python -c "print( int('$missesR'.replace(',', '')) + $x )")
+			D1mwF[$j]=$(python -c "print( int('$missesW'.replace(',', '')) + $y )")
 		done
 	done
 
@@ -85,13 +85,13 @@ set grid
 set term png
 set output "$fPNG1"
 plot "${fDAT[1]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[1]}" using 1:4 with lines lw 2 title "fast"  \
+     "${fDAT[1]}" using 1:4 with lines lw 2 title "fast",  \
 	 "${fDAT[2]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[2]}" using 1:4 with lines lw 2 title "fast"  \
+     "${fDAT[2]}" using 1:4 with lines lw 2 title "fast",  \
 	 "${fDAT[3]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[3]}" using 1:4 with lines lw 2 title "fast"  \
+     "${fDAT[3]}" using 1:4 with lines lw 2 title "fast",  \
 	 "${fDAT[4]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[4]}" using 1:4 with lines lw 2 title "fast"  
+     "${fDAT[4]}" using 1:4 with lines lw 2 title "fast"
 replot
 quit
 END_GNUPLOT
@@ -105,13 +105,13 @@ set grid
 set term png
 set output "$fPNG2"
 plot "${fDAT[1]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[1]}" using 1:5 with lines lw 2 title "fast"	\
+     "${fDAT[1]}" using 1:5 with lines lw 2 title "fast",	\
 	 "${fDAT[2]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[2]}" using 1:5 with lines lw 2 title "fast"  \
+     "${fDAT[2]}" using 1:5 with lines lw 2 title "fast",  \
 	 "${fDAT[3]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[3]}" using 1:5 with lines lw 2 title "fast"  \
+     "${fDAT[3]}" using 1:5 with lines lw 2 title "fast",  \
 	 "${fDAT[4]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[4]}" using 1:5 with lines lw 2 title "fast"  
+     "${fDAT[4]}" using 1:5 with lines lw 2 title "fast"
 replot
 quit
 END_GNUPLOT
