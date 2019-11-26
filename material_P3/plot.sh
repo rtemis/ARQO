@@ -34,13 +34,13 @@ set grid
 set yrange [*:]
 set term png
 set output "cache_escritura.png"
-plot "cache_1024.dat" using 1:3 with lines lw 2 title "slow 1024", \
+plot "cache_1024.dat" using 1:3 with lines lw 4 title "slow 1024", \
      "cache_1024.dat" using 1:5 with lines lw 2 title "fast 1024",	\
-	 "cache_2048.dat" using 1:3 with lines lw 2 title "slow 2048", \
+	 "cache_2048.dat" using 1:3 with lines lw 4 title "slow 2048", \
      "cache_2048.dat" using 1:5 with lines lw 2 title "fast 2048",  \
-	 "cache_4096.dat" using 1:3 with lines lw 2 title "slow 4096", \
+	 "cache_4096.dat" using 1:3 with lines lw 4 title "slow 4096", \
      "cache_4096.dat" using 1:5 with lines lw 2 title "fast 4096",  \
-	 "cache_8192.dat" using 1:3 with lines lw 2 title "slow 8192", \
+	 "cache_8192.dat" using 1:3 with lines lw 4 title "slow 8192", \
      "cache_8192.dat" using 1:5 with lines lw 2 title "fast 8192"
 replot
 quit

@@ -50,7 +50,7 @@ for ((k = 1, cache = 1024 ; cache <= 8192 ; k++, cache *= 2 )); do
 		done
 		# Fast loop
 		for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
-			echo "Slow N: $N / $Nfinal..."
+			echo "Fast N: $N / $Nfinal..."
 			# Calculate fast cache misses
 			d=$(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --LL=8388608,1,64 --cachegrind-out-file=temp.dat ./fast $N)
 			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
@@ -83,15 +83,16 @@ set xlabel "Matrix Size"
 set key right bottom
 set grid
 set term png
-set output "$fPNG1"
-plot "${fDAT[1]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[1]}" using 1:4 with lines lw 2 title "fast",  \
-	 "${fDAT[2]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[2]}" using 1:4 with lines lw 2 title "fast",  \
-	 "${fDAT[3]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[3]}" using 1:4 with lines lw 2 title "fast",  \
-	 "${fDAT[4]}" using 1:2 with lines lw 2 title "slow", \
-     "${fDAT[4]}" using 1:4 with lines lw 2 title "fast"
+set yrange [*:]
+set output "cache_lectura.png"
+plot "cache_1024.dat" using 1:2 with lines lw 2 title "slow 1024", \
+     "cache_1024.dat" using 1:4 with lines lw 2 title "fast 1024",  \
+	 "cache_2048.dat" using 1:2 with lines lw 2 title "slow 2048", \
+     "cache_2048.dat" using 1:4 with lines lw 2 title "fast 2048",  \
+	 "cache_4096.dat" using 1:2 with lines lw 2 title "slow 4096", \
+     "cache_4096.dat" using 1:4 with lines lw 2 title "fast 4096",  \
+	 "cache_8192.dat" using 1:2 with lines lw 2 title "slow 8192", \
+     "cache_8192.dat" using 1:4 with lines lw 2 title "fast 8192"
 replot
 quit
 END_GNUPLOT
@@ -102,16 +103,17 @@ set ylabel "Number of Misses"
 set xlabel "Matrix Size"
 set key right bottom
 set grid
+set yrange [*:]
 set term png
-set output "$fPNG2"
-plot "${fDAT[1]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[1]}" using 1:5 with lines lw 2 title "fast",	\
-	 "${fDAT[2]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[2]}" using 1:5 with lines lw 2 title "fast",  \
-	 "${fDAT[3]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[3]}" using 1:5 with lines lw 2 title "fast",  \
-	 "${fDAT[4]}" using 1:3 with lines lw 2 title "slow", \
-     "${fDAT[4]}" using 1:5 with lines lw 2 title "fast"
+set output "cache_escritura.png"
+plot "cache_1024.dat" using 1:3 with lines lw 4 title "slow 1024", \
+     "cache_1024.dat" using 1:5 with lines lw 2 title "fast 1024",	\
+	 "cache_2048.dat" using 1:3 with lines lw 4 title "slow 2048", \
+     "cache_2048.dat" using 1:5 with lines lw 2 title "fast 2048",  \
+	 "cache_4096.dat" using 1:3 with lines lw 4 title "slow 4096", \
+     "cache_4096.dat" using 1:5 with lines lw 2 title "fast 4096",  \
+	 "cache_8192.dat" using 1:3 with lines lw 4 title "slow 8192", \
+     "cache_8192.dat" using 1:5 with lines lw 2 title "fast 8192"
 replot
 quit
 END_GNUPLOT

@@ -53,7 +53,6 @@ done
 for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 	x=$(python -c "print(${oldF[$j]} / $reps)")
 	y=$(python -c "print(${oldS[$j]} / $reps)")
-	echo "$N     $y     $x"
 	echo "$N     $y     $x" >> $fDAT
 done
 
