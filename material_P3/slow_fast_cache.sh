@@ -5,8 +5,8 @@
 # Loop variables
 Ninicio=5072
 Npaso=64
-Nfinal=5584
-
+#Nfinal=5584
+Nfinal=5136
 # Number of iterations
 reps=2
 
@@ -16,7 +16,7 @@ fPNG2=cache_escritura.png
 rm -f $fPNG1 $fPNG2
 
 echo "Running slow and fast..."
-for ((k = 1, cache = 1024 ; cache <= 8192 ; k++, cache *= 2 )); do
+for ((k = 1, cache = 1024 ; cache <= 1024 ; k++, cache *= 2 )); do
 	# Files to be created
 	fDAT[$k]=cache_$cache.dat
 
@@ -39,27 +39,27 @@ for ((k = 1, cache = 1024 ; cache <= 8192 ; k++, cache *= 2 )); do
 		for ((N = Ninicio, j = 1; N <= Nfinal ; N += Npaso, j++)); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate slow cache misses
-			echo $(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --L1=8388608,1,64 --cachegrind-out-file=temp.dat ./slow $N)
-			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
-			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
+			d=$(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --LL=8388608,1,64 --cachegrind-out-file=temp.dat ./slow $N)
+			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}') 
+			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}') 
 			x=${D1mrS[$j]}
 			y=${D1mwS[$j]}
 			# Update slow value for average calculation
-			D1mrS[$j]=$(python -c "print( $missesR + $x )")
-			D1mwS[$j]=$(python -c "print( $missesW + $y )")
+			D1mrS[$j]=$(python -c "print( int('$missesR'.replace(',', '')) + $x )")
+			D1mwS[$j]=$(python -c "print( int('$missesW'.replace(',', '')) + $y )")
 		done
 		# Fast loop
 		for ((N = Ninicio, j = 1 ; N <= Nfinal ; N += Npaso, j++)); do
 			echo "Slow N: $N / $Nfinal..."
 			# Calculate fast cache misses
-			echo $(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --L1=8388608,1,64 --cachegrind-out-file=temp.dat ./fast $N)
-			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}')
+			d=$(valgrind --tool=cachegrind --I1=$cache,1,64 --D1=$cache,1,64 --LL=8388608,1,64 --cachegrind-out-file=temp.dat ./fast $N)
+			missesR=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $5}') 
 			missesW=$(cg_annotate temp.dat | head -n 30 | grep 'PROGRAM' | awk '{print $8}')
 			x=${D1mrF[$j]}
 			y=${D1mwF[$j]}
 			# Update fast value for average calculation
-			D1mrS[$j]=$(python -c "print( $missesR + $x )")
-			D1mwS[$j]=$(python -c "print( $missesW + $y )")
+			D1mrS[$j]=$(python -c "print( int('$missesR'.replace(',', '')) + $x )")
+			D1mwS[$j]=$(python -c "print( int('$missesW'.replace(',', '')) + $y )")
 		done
 	done
 
