@@ -13,7 +13,7 @@ reps=5
 # Files to be created
 fDAT=mult.dat
 fPNG1=mult_cache.png
-fPNG1=mult_time.png
+fPNG2=mult_time.png
 
 # Erase the files if they already exist
 rm -f $fDAT fPNG1 fPNG2
