@@ -1,47 +1,20 @@
-rm -f cache_lectura.png
-rm -f cache_escritura.png
+rm -f time_mat.png
 
 echo "Generating plot..."
 # llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
 # estándar el script que está entre "<< END_GNUPLOT" y "END_GNUPLOT"
 gnuplot << END_GNUPLOT
-set title "Slow-Fast Cache Read Misses"
+set title "Normal Traspuesta Execution Time"
 set ylabel "Number of Misses"
 set xlabel "Matrix Size"
 set key right bottom
 set grid
 set term png
 set yrange [*:]
-set output "cache_lectura.png"
-plot "cache_1024.dat" using 1:2 with lines lw 2 title "slow 1024", \
-     "cache_1024.dat" using 1:4 with lines lw 2 title "fast 1024",  \
-	 "cache_2048.dat" using 1:2 with lines lw 2 title "slow 2048", \
-     "cache_2048.dat" using 1:4 with lines lw 2 title "fast 2048",  \
-	 "cache_4096.dat" using 1:2 with lines lw 2 title "slow 4096", \
-     "cache_4096.dat" using 1:4 with lines lw 2 title "fast 4096",  \
-	 "cache_8192.dat" using 1:2 with lines lw 2 title "slow 8192", \
-     "cache_8192.dat" using 1:4 with lines lw 2 title "fast 8192"
+set output "time_mat.png"
+plot "mult.dat" using 1:2 with lines lw 2 title "Normal", \
+	"mult.dat" using 1:5 with lines lw 2 title "Traspuesta "
 replot
 quit
 END_GNUPLOT
 
-gnuplot << END_GNUPLOT
-set title "Slow-Fast Cache Write Misses"
-set ylabel "Number of Misses"
-set xlabel "Matrix Size"
-set key right bottom
-set grid
-set yrange [*:]
-set term png
-set output "cache_escritura.png"
-plot "cache_1024.dat" using 1:3 with lines lw 4 title "slow 1024", \
-     "cache_1024.dat" using 1:5 with lines lw 2 title "fast 1024",	\
-	 "cache_2048.dat" using 1:3 with lines lw 4 title "slow 2048", \
-     "cache_2048.dat" using 1:5 with lines lw 2 title "fast 2048",  \
-	 "cache_4096.dat" using 1:3 with lines lw 4 title "slow 4096", \
-     "cache_4096.dat" using 1:5 with lines lw 2 title "fast 4096",  \
-	 "cache_8192.dat" using 1:3 with lines lw 4 title "slow 8192", \
-     "cache_8192.dat" using 1:5 with lines lw 2 title "fast 8192"
-replot
-quit
-END_GNUPLOT
