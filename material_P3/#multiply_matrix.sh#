@@ -113,7 +113,7 @@ set output "$fPNG1"
 plot "$fDAT" using 1:3 with lines lw 2 title "normal read", \
      "$fDAT" using 1:4 with lines lw 2 title "normal write", \
 		 "$fDAT" using 1:6 with lines lw 2 title "traspuesta read", \
-		 "$fDAT" using 1:7 with lines lw 2 title "traspuesta write",
+		 "$fDAT" using 1:7 with lines lw 2 title "traspuesta write"
 replot
 quit
 END_GNUPLOT
