@@ -441,7 +441,7 @@ architecture rtl of processor is
 ---------------------------------------------------
 	-- enable mux rd_1
 	mux_rd1 <= res_alu_mem WHEN puerto_wt_mem = instruccion_ex(25 downto 21) AND puerto_wt_mem /= "00000" AND reg_wrt_mem = '1' ELSE
-	 						write_data WHEN puerto_wt_wb 	= instruccion_ex(25 downto 21) AND puerto_wt_wb /= "00000" AND reg_wrt_wb = '1' ELSE
+	 						write_data WHEN puerto_wt_wb = instruccion_ex(25 downto 21) AND puerto_wt_wb /= "00000" AND reg_wrt_wb = '1' ELSE
 							rd1_ex;
 
 	-- enable mux_rd2

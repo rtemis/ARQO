@@ -1,0 +1,192 @@
+Word size: 64 bits
+Execution time: 0.000000
+Total: 8.401877
+Word size: 64 bits
+Execution time: 0.000000
+Total: 28.161099
+Word size: 64 bits
+Execution time: 0.000000
+Total: 53.065357
+Word size: 64 bits
+Execution time: 0.000001
+Total: 97.133838
+Word size: 64 bits
+Execution time: 0.000000
+Total: 131.722387
+Word size: 64 bits
+Execution time: 0.000001
+Total: 184.515193
+Word size: 64 bits
+Execution time: 0.000001
+Total: 260.024481
+Word size: 64 bits
+Execution time: 0.000001
+Total: 332.254266
+Word size: 64 bits
+Execution time: 0.000000
+Total: 426.444057
+Word size: 64 bits
+Execution time: 0.000001
+Total: 546.824812
+Word size: 64 bits
+Execution time: 0.000001
+Total: 646.364847
+Word size: 64 bits
+Execution time: 0.000000
+Total: 757.910094
+Word size: 64 bits
+Execution time: 0.000001
+Total: 878.995719
+Word size: 64 bits
+Execution time: 0.000001
+Total: 1018.153040
+Word size: 64 bits
+Execution time: 0.000001
+Total: 1186.907728
+Word size: 64 bits
+Execution time: 0.000001
+Total: 1338.532216
+Word size: 64 bits
+Execution time: 0.000001
+Total: 1505.044755
+Word size: 64 bits
+Execution time: 0.000001
+Total: 1701.778381
+Word size: 64 bits
+Execution time: 0.000001
+Total: 1876.116658
+Word size: 64 bits
+Execution time: 0.000001
+Total: 2062.228293
+Word size: 64 bits
+Execution time: 0.000002
+Total: 2258.318034
+Word size: 64 bits
+Execution time: 0.000002
+Total: 2462.491569
+Word size: 64 bits
+Execution time: 0.000002
+Total: 2732.790694
+Word size: 64 bits
+Execution time: 0.000002
+Total: 2960.072865
+Word size: 64 bits
+Execution time: 0.000003
+Total: 3246.607768
+Word size: 64 bits
+Execution time: 0.000002
+Total: 3488.594323
+Word size: 64 bits
+Execution time: 0.000003
+Total: 3756.243258
+Word size: 64 bits
+Execution time: 0.000003
+Total: 4011.085396
+Word size: 64 bits
+Execution time: 0.000003
+Total: 4289.908427
+Word size: 64 bits
+Execution time: 0.000003
+Total: 4590.923733
+Word size: 64 bits
+Execution time: 0.000003
+Total: 4887.026640
+Word size: 64 bits
+Execution time: 0.000004
+Total: 5189.125498
+Word size: 64 bits
+Execution time: 0.000003
+Total: 5519.721313
+Word size: 64 bits
+Execution time: 0.000004
+Total: 5866.619637
+Word size: 64 bits
+Execution time: 0.000004
+Total: 6211.598036
+Word size: 64 bits
+Execution time: 0.000004
+Total: 6538.033700
+Word size: 64 bits
+Execution time: 0.000004
+Total: 6878.711661
+Word size: 64 bits
+Execution time: 0.000004
+Total: 7257.656842
+Word size: 64 bits
+Execution time: 0.000005
+Total: 7634.856031
+Word size: 64 bits
+Execution time: 0.000005
+Total: 8018.618890
+Word size: 64 bits
+Execution time: 0.000005
+Total: 8445.351146
+Word size: 64 bits
+Execution time: 0.000005
+Total: 8891.511645
+Word size: 64 bits
+Execution time: 0.000006
+Total: 9296.264499
+Word size: 64 bits
+Execution time: 0.000006
+Total: 9734.123966
+Word size: 64 bits
+Execution time: 0.000006
+Total: 10153.378629
+Word size: 64 bits
+Execution time: 0.000011
+Total: 10604.922988
+Word size: 64 bits
+Execution time: 0.000007
+Total: 11052.734559
+Word size: 64 bits
+Execution time: 0.000007
+Total: 11565.648183
+Word size: 64 bits
+Execution time: 0.000007
+Total: 12030.925849
+Word size: 64 bits
+Execution time: 0.000009
+Total: 12554.921607
+Word size: 64 bits
+Execution time: 0.000007
+Total: 13075.212291
+Word size: 64 bits
+Execution time: 0.000008
+Total: 13573.790099
+Word size: 64 bits
+Execution time: 0.000008
+Total: 14075.274875
+Word size: 64 bits
+Execution time: 0.000008
+Total: 14557.835811
+Word size: 64 bits
+Execution time: 0.000009
+Total: 15116.830811
+Word size: 64 bits
+Execution time: 0.000009
+Total: 15680.420614
+Word size: 64 bits
+Execution time: 0.000009
+Total: 16285.747542
+Word size: 64 bits
+Execution time: 0.000010
+Total: 16788.468229
+Word size: 64 bits
+Execution time: 0.000010
+Total: 17402.878572
+Word size: 64 bits
+Execution time: 0.000011
+Total: 18030.980130
+Word size: 64 bits
+Execution time: 0.000011
+Total: 18642.108112
+Word size: 64 bits
+Execution time: 0.000011
+Total: 19204.115157
+Word size: 64 bits
+Execution time: 0.000012
+Total: 19858.704401
+Word size: 64 bits
+Execution time: 0.001568
+Total: 20497.121654
