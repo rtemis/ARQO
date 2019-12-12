@@ -11,8 +11,10 @@ void multiplica(float **matrix_a, float **matrix_b, float **matrix_c, int n){
   //j es columna de b, columna de c
   //k es para moverte por la fila de a, moverte por la columna de b
   for(i = 0; i < n; i++){
+    #pragma omp parallel default(shared) private(j)
     #pragma omp parallel for reduction(+:aux)
     for(j = 0; j < n; j++){
+      #pragma omp parallel default(shared) private(k)
       for(k = 0; k < n; k++){
 
         aux += matrix_a[i][k] * matrix_b[k][j];
