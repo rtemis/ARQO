@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "arqo4.h"
 #include <omp.h>
 
@@ -11,12 +10,12 @@ void multiplica(float **matrix_a, float **matrix_b, float **matrix_c, int n){
   //i es fila de a, fila de c
   //j es columna de b, columna de c
   //k es para moverte por la fila de a, moverte por la columna de b
-  #pragma omp parallel for reduction(+:aux)
   for(i = 0; i < n; i++){
+    #pragma omp parallel for reduction(+:aux)
     for(j = 0; j < n; j++){
       for(k = 0; k < n; k++){
 
-        aux = aux + matrix_a[i][k] * matrix_b[k][j];
+        aux += matrix_a[i][k] * matrix_b[k][j];
       }
       matrix_c[i][j] = aux;
       aux = 0.0;

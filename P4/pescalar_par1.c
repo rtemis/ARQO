@@ -1,5 +1,5 @@
 // ----------- Arqo P4-----------------------
-// pescalar_par2
+// pescalar_par1
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@ int main(void)
 	long long k=0;
 	struct timeval fin,ini;
 	float sum=0;
-	
+
 	A = generateVector(M);
 	B = generateVector(M);
 	if ( !A || !B )
@@ -21,13 +21,15 @@ int main(void)
 		freeVector(B);
 		return -1;
 	}
-	
+
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */
 	sum = 0;
-	#pragma omp parallel for reduction(+:sum)
+	#pragma omp parallel for
 	for(k=0;k<M;k++)
 	{
+		//printf("sum: %f\n", sum);
+
 		sum = sum + A[k]*B[k];
 	}
 	/* Fin del computo */
