@@ -12,6 +12,7 @@ void multiplica(float **matrix_a, float **matrix_b, float **matrix_c, int n){
   //k es para moverte por la fila de a, moverte por la columna de b
   for(i = 0; i < n; i++){
     for(j = 0; j < n; j++){
+      #pragma omp parallel default(shared) private(k)
       #pragma omp parallel for reduction(+:aux)
       for(k = 0; k < n; k++){
 
@@ -68,7 +69,7 @@ int main(int argc, char** argv){
   // printf("\nB:\n");
   // imprime_matrix(matrix_b, n);
   // printf("\nC:\n");
-  //imprime_matrix(matrix_c, n);
+  // imprime_matrix(matrix_c, n);
 
 
   freeMatrix(matrix_a);

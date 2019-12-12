@@ -4,7 +4,7 @@ FLAGS = -g -lgomp -Wall -D_GNU_SOURCE -fopenmp
 
 .PHONY: clean all
 
-all: omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 multiply_ser multiply_par1 multiply_par2 multiply_par3 clear
+all: omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 multiply_ser multiply_par1 multiply_par2 multiply_par3 pi_serie clear
 
 omp1: omp1.c
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
@@ -33,8 +33,11 @@ multiply_par2: multiply_par2.c arqo4.c
 multiply_par3: multiply_par3.c arqo4.c
 	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
 
+pi_serie: pi_serie.c
+	gcc $(FLAGS) $(LIB_DIR) -o $@ $^ $(LIBS)
+
 clean:
-	rm -f *.o *~ omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 multiply_ser	multiply_par1	multiply_par2	multiply_par3
+	rm -f *.o *~ omp1 omp2 pescalar_serie pescalar_par1 pescalar_par2 multiply_ser	multiply_par1	multiply_par2	multiply_par3 pi_serie
 
 clear:
 	rm -f *.o *~
