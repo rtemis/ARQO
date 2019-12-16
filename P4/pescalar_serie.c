@@ -6,15 +6,23 @@
 #include <stdlib.h>
 #include "arqo4.h"
 
-int main(void)
+int main(int argc, char** argv)
 {
+	if(argc < 1){
+		printf("Error de agumentos: ./pescalar N\n");
+		exit(0);
+	}
+
 	float *A=NULL, *B=NULL;
 	long long k=0;
 	struct timeval fin,ini;
 	float sum=0;
+	long tam;
 
-	A = generateVector(M);
-	B = generateVector(M);
+	tam = atoi(argv[1]);
+
+	A = generateVector(tam);
+	B = generateVector(tam);
 	if ( !A || !B )
 	{
 		printf("Error when allocationg matrix\n");
@@ -26,7 +34,7 @@ int main(void)
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */
 	sum = 0;
-	for(k=0;k<M;k++)
+	for(k=0;k<tam;k++)
 	{
 		//printf("sum: %f\n", sum);
 
