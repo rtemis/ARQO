@@ -21,7 +21,6 @@ int main(int argc, char** argv)
 	long tam;
 
 	tam = atoi(argv[1]);
-
 	A = generateVector(tam);
 	B = generateVector(tam);
 	if ( !A || !B )
@@ -31,7 +30,7 @@ int main(int argc, char** argv)
 		freeVector(B);
 		return -1;
 	}
-	omp_set_num_threads(1);
+	omp_set_num_threads(3);
 
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */

@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 		freeVector(B);
 		return -1;
 	}
-	omp_set_num_threads(1);
+	omp_set_num_threads(2);
 
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */

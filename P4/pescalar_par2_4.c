@@ -21,9 +21,9 @@ int main(int argc, char** argv)
 	long tam;
 
 	tam = atoi(argv[1]);
-
 	A = generateVector(tam);
 	B = generateVector(tam);
+
 	if ( !A || !B )
 	{
 		printf("Error when allocationg matrix\n");
@@ -31,7 +31,8 @@ int main(int argc, char** argv)
 		freeVector(B);
 		return -1;
 	}
-	omp_set_num_threads(1);
+	omp_set_num_threads(4);
+
 
 	gettimeofday(&ini,NULL);
 	/* Bloque de computo */
