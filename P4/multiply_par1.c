@@ -71,7 +71,7 @@ int main(int argc, char** argv){
   // printf("\nB:\n");
   // imprime_matrix(matrix_b, n);
   // printf("\nC:\n");
-  //imprime_matrix(matrix_c, n);
+  // imprime_matrix(matrix_c, n);
 
 
   freeMatrix(matrix_a);
