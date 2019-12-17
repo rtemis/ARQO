@@ -19,6 +19,11 @@ int main( int argc, char *argv[] )
 	FILE *f;
 	char buf[512];
 
+	if(argc < 1){
+		printf("Error de agumentos: ./pescalar N\n");
+		exit(0);
+	}
+	pad = atoi(argv[1]);
 	// Obtenemos el numero de cores del equipo
 	numProcs = omp_get_num_procs();
 	printf("Numero de cores del equipo: %d\n", numProcs);
@@ -30,7 +35,8 @@ int main( int argc, char *argv[] )
 	fgets(buf, sizeof(buf), f);
 	pclose(f);
 	linesz = atoi(buf);
-	padsz = linesz / datasz;
+	padsz = pad;
+	//padsz = linesz / datasz;
 	printf("Cache line size: %d bytes => padding: %d elementos\n", linesz, padsz);
 
 	// Solicitamos memoria para la suma de cada proceso
