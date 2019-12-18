@@ -2,8 +2,6 @@
 #include "arqo4.h"
 #include <omp.h>
 
-
-
 void multiplica(float **matrix_a, float **matrix_b, float **matrix_c, int n){
   int i, j, k;
   float aux = 0;
@@ -12,12 +10,11 @@ void multiplica(float **matrix_a, float **matrix_b, float **matrix_c, int n){
   //k es para moverte por la fila de a, moverte por la columna de b
   for(i = 0; i < n; i++){
     for(j = 0; j < n; j++){
-      #pragma omp parallel private(k)
-      #pragma omp for reduction(+:aux)
+      #pragma omp parallel for reduction(+:aux)
       for(k = 0; k < n; k++){
-
         aux += matrix_a[i][k] * matrix_b[k][j];
       }
+
       matrix_c[i][j] = aux;
       aux = 0.0;
     }
@@ -41,7 +38,7 @@ int main(int argc, char** argv){
   float **matrix_a = NULL;
   float **matrix_b = NULL;
   float **matrix_c = NULL;
-  int n;
+  int n, threads;
 
   struct timeval fin, ini;
 
@@ -51,12 +48,14 @@ int main(int argc, char** argv){
     }
 
   n = atoi(argv[1]);
+  threads = atoi(argv[2]);
   matrix_a = generateMatrix(n);
   matrix_b = generateMatrix(n);
   matrix_c = generateEmptyMatrix(n);
 
   //printf("----------MULTIPLICACION NORMAL----------\n");
 
+  omp_set_num_threads(threads);
   gettimeofday(&ini, NULL);
 
   multiplica(matrix_a, matrix_b, matrix_c, n);
