@@ -1,5 +1,5 @@
 fPNG=hilo1.png
-fPNG=acelearion.png
+
 
 echo "Generating plot..."
 # llamar a gnuplot para generar el gráfico y pasarle directamente por la entrada
@@ -84,20 +84,80 @@ replot
 quit
 END_GNUPLOT
 
+fPNG=Acelearion_1.png
+
+echo "Generating plot..."
 
 gnuplot << END_GNUPLOT
-set title "Aceleracion segun tam. vector"
+set title "Aceleracion segun tam. vector 1 hilo"
 set ylabel "Aceleracion"
 set xlabel "Vector Size"
 set key right bottom
 set grid
 set term png
-set output "Aceleracion"
-plot "$aceleracion_3.dat" using 1:2 with lines lw 2 title "Serie", \
-     "$fDAT2" using 1:3 with lines lw 2 title "Paralel 1 thread", \
-		 "$fDAT2" using 1:4 with lines lw 2 title "Paralel 2 thread", \
-		 "$fDAT2" using 1:5 with lines lw 2 title "Paralel 3 thread", \
-		 "$fDAT2" using 1:6 with lines lw 2 title "Paralel 4 thread"
+set output "$fPNG"
+plot "aceleracion_1.dat" using 1:2 with lines lw 2 title "a", \
+     "aceleracion_1.dat" using 1:3 with lines lw 2 title "b", \
+		 "aceleracion_1.dat" using 1:4 with lines lw 2 title "c", \
+		 "aceleracion_1.dat" using 1:5 with lines lw 2 title "c"
+replot
+quit
+END_GNUPLOT
+
+fPNG=Acelearion_2.png
+echo "Generating plot..."
+
+gnuplot << END_GNUPLOT
+set title "Aceleracion segun tam. vector 2 hilos"
+set ylabel "Aceleracion"
+set xlabel "Vector Size"
+set key right bottom
+set grid
+set term png
+set output "$fPNG"
+plot "aceleracion_2.dat" using 1:2 with lines lw 2 title "q", \
+     "aceleracion_2.dat" using 1:3 with lines lw 2 title "w", \
+		 "aceleracion_2.dat" using 1:4 with lines lw 2 title "re", \
+		 "aceleracion_2.dat" using 1:5 with lines lw 2 title "f"
+replot
+quit
+END_GNUPLOT
+
+fPNG=Acelearion_3.png
+
+echo "Generating plot..."
+
+gnuplot << END_GNUPLOT
+set title "Aceleracion segun tam. vector 3 hilos"
+set ylabel "Aceleracion"
+set xlabel "Vector Size"
+set key right bottom
+set grid
+set term png
+set output "$fPNG"
+plot "aceleracion_3.dat" using 1:2 with lines lw 2 title "r", \
+     "aceleracion_3.dat" using 1:3 with lines lw 2 title "r", \
+		 "aceleracion_3.dat" using 1:4 with lines lw 2 title "rf", \
+		 "aceleracion_3.dat" using 1:5 with lines lw 2 title "g"
+replot
+quit
+END_GNUPLOT
+
+fPNG=Acelearion_4.png
+
+echo "Generating plot..."
+gnuplot << END_GNUPLOT
+set title "Aceleracion segun tam. vector 4 hilos"
+set ylabel "Aceleracion"
+set xlabel "Vector Size"
+set key right bottom
+set grid
+set term png
+set output "$fPNG"
+plot "aceleracion_4.dat" using 1:2 with lines lw 2 title "f", \
+     "aceleracion_4.dat" using 1:3 with lines lw 2 title "f", \
+		 "aceleracion_4.dat" using 1:4 with lines lw 2 title "f", \
+		 "aceleracion_4.dat" using 1:5 with lines lw 2 title "f"
 replot
 quit
 END_GNUPLOT
