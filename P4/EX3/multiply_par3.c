@@ -14,7 +14,6 @@ void multiplica(float **matrix_a, float **matrix_b, float **matrix_c, int n){
       for(k = 0; k < n; k++){
         aux += matrix_a[i][k] * matrix_b[k][j];
       }
-
       matrix_c[i][j] = aux;
       aux = 0.0;
     }
